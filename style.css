@@ -2,3 +2,22 @@
     font-size: 35px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+h3 {
+    background-image: url('happy-people-2.jpg');
+    background-position-x: center;
+    margin: 0px;
+    background-repeat: no-repeat;
+    color: #FFFFFF;
+    background-color: red;
+    font-size: 140%;
+    font-weight: normal;
+    line-height: 260px;
+    text-align: center;
+    height: 1050px;
+}
+#alto-sin {
+    text-align:justify;
+}
+#basso-dx {
+    text-align: right;
+}
