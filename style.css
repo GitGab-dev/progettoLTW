@@ -1,23 +1,40 @@
+html, body {
+    background-color:black;
+    min-height:100%
+}
+
 #homeTitle {
     font-size: 35px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-h3 {
-    background-image: url('happy-people-2.jpg');
+
+#mainPart {
+    background-image: url('happy-people-2.1.jpg');
     background-position-x: center;
-    margin: 0px;
     background-repeat: no-repeat;
     color: #FFFFFF;
-    background-color: red;
-    font-size: 140%;
-    font-weight: normal;
-    line-height: 260px;
-    text-align: center;
+    /*background-color: red;*/
+    
     height: 1050px;
 }
+
+.my-cell {
+    margin: 50px 200px;
+    padding: 10px;
+    border-color: white;
+    border-style: solid;
+    background-color: rgba(54, 50, 50, 0.5);/*Valore alpha 0.5 semitrasparente*/
+    width: 500px;
+    height: 200px;
+    font-size: 40px;
+    text-align: center;
+}
+
 #alto-sin {
-    text-align:justify;
+    position: relative;
+    left:0px; 
 }
 #basso-dx {
-    text-align: right;
+    position: absolute;
+    right:0px; 
 }
