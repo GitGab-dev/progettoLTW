@@ -9,7 +9,7 @@ html, body {
 }
 
 #mainPart {
-    background-image: url('happy-people-2.1.jpg');
+    background-image: url('./images/happy-people-2.1.jpg');
     background-position-x: center;
     background-repeat: no-repeat;
     color: #FFFFFF;
