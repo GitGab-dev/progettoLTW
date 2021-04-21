@@ -1,40 +1,66 @@
 html, body {
     background-color:black;
-    min-height:100%
+    font-family: 'Courier New', monospace;
 }
 
 #homeTitle {
-    font-size: 35px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 70px;
+    font-weight: bold;
 }
+
+
 
 #mainPart {
     background-image: url('./images/happy-people-2.1.jpg');
     background-position-x: center;
     background-repeat: no-repeat;
-    color: #FFFFFF;
-    /*background-color: red;*/
-    
+    color: #FFFFFF;    
     height: 1050px;
 }
 
-.my-cell {
-    margin: 50px 200px;
+
+/*Celle di testo*/
+.myCell {
+    margin: 50px 10%;
     padding: 10px;
     border-color: white;
     border-style: solid;
-    background-color: rgba(54, 50, 50, 0.5);/*Valore alpha 0.5 semitrasparente*/
+    background-color: rgba(54, 50, 50, 0.5);
     width: 500px;
     height: 200px;
     font-size: 40px;
     text-align: center;
+    transition:all 0.3s ease;
 }
 
-#alto-sin {
+.myCell:hover {
+    transform: scale(1.1);
+}
+
+#altoSin {
     position: relative;
     left:0px; 
 }
-#basso-dx {
+#bassoDx {
     position: absolute;
     right:0px; 
+}
+
+/*Form di Login*/
+.myFormDiv {
+    display: none;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    margin-left: -175px; 
+    border: 7px outset #f1f1f1;
+    z-index: 9;
+    perspective: 100px;
+  }
+  
+.myForm {
+    max-width: 400px;
+    padding: 10px;
+    background-color: white;
+    color: black;
 }

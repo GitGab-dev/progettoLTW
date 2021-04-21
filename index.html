@@ -5,28 +5,82 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planning Together</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    <link rel="stylesheet" href="./style.css">
-</head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+  </head>
 <body>
 
     <!--CONTAINER HEADER-->
+
+    <!--
     <div class="container-fluid">
       <nav class="navbar navbar-light bg-light">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png" width="60px">
-        <a href="#" class="navbar-brand"> <h1>Planning Together</h1></a>
-        <div id="navbarSupportedContent">
-          <a class="btn btn-primary" href="#collapseExample">Login</a>
+        <a class="navbar-brand" href="#" >
+          <img src="./images/bootstrap-stack.png" width="5%" height="5%" class="d-inline-block align-top" alt="">
+          <p id="homeTitle">Planning together</p>
+        </a>
+        
+        
+        <div id="navbarSupportedContent"></div>
+          <button class="btn btn-primary" onclick="return test()">Login</button>
           <a class="btn btn-primary" href="#collapseExample">Search</a>
         </div>
       </nav>
-    </div>
+    </div>*/-->
+
+    
       <!--<img src="./happy-people-2.jpg" class="img-fluid" alt="Responsive image">-->
+      
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+          <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+          Bootstrap
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <button class="btn btn-primary test" onclick="return test()">Login</button>
+            <a class="btn btn-primary test" href="#collapseExample">Search</a>
+          </div>
+        </div>
+      </nav>
 
     <!--CONTAINER IMG E TESTI-->
+    
     <div id="mainPart">
-      <p class="my-cell" id="alto-sin">Vuoi partecipare ad iniziative e non sai dove trovare annunci?</p>
-      <p class="my-cell" id="basso-dx">Vuoi partecipare ad iniziative e non sai dove trovare annunci?</p>
+
+      <p class="myCell" id="altoSin">Vuoi partecipare ad iniziative e non sai dove trovare annunci?</p>
+
+      
+      <div class="myFormDiv">  
+        <form action="" method="POST" class="myForm">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Ricordami</label>
+          </div>
+          <br>
+          <button type="submit" class="btn btn-primary">Submit</button><br>
+          <label for="signUp">Non sei ancora iscritto?</label>
+          <button type="submit" class="btn btn-link" id="signUp">Crea un account</button>
+        </form>
+      </div>
+
+      
+      <p class="myCell" id="bassoDx">Vuoi partecipare ad iniziative e non sai dove trovare annunci?</p>
     </div>
+
+    
+    <script src="script.js"></script>
     
 </body>
 </html>
