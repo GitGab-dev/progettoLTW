@@ -3,12 +3,17 @@ html, body {
     font-family: 'Courier New', monospace;
 }
 
+
 #homeTitle {
-    font-size: 50px;
+    font-size: 300%;
     font-weight: bold;
+    color: #57737a;
+    text-shadow: 3px 3px 5px #082b34;
 }
 
-
+img {
+    border: 5px solid #555;
+}
 
 #mainPart {
     background-image: url('./images/happy-people-2.1.jpg');
