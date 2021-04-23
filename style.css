@@ -1,4 +1,4 @@
-html, body {
+body {
     background-color:black;
     font-family: 'Courier New', monospace;
 }
@@ -26,7 +26,7 @@ img {
 
 /*Celle di testo*/
 .myCell {
-    margin: 50px 10%;
+    margin: 5% 10%;
     padding: 10px;
     border-color: white;
     border-style: solid;
@@ -56,16 +56,17 @@ img {
     display: none;
     position: fixed;
     top: 20%;
-    left: 50%;
-    margin-left: -175px; 
+    left: 40.2%;
     border: 7px outset #f1f1f1;
-    z-index: 9;
-    perspective: 100px;
+    width: 20%;
+    z-index :9
   }
-  
+
+h4 {
+    text-align: center;
+}
 .myForm {
-    max-width: 400px;
-    padding: 10px;
+    padding: 3%;
     background-color: white;
     color: black;
 }
