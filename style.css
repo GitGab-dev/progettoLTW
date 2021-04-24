@@ -1,19 +1,21 @@
 body {
     background-color:black;
-    font-family: 'Courier New', monospace;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 
 #homeTitle {
     font-size: 300%;
     font-weight: bold;
-    color: #57737a;
+    color: #86afb9;
     text-shadow: 3px 3px 5px #082b34;
 }
 
-img {
-    border: 5px solid #555;
+.navbar-bg {
+    background-color: #000000;
+    color: #86afb9;
 }
+
 
 #mainPart {
     background-image: url('./images/happy-people-2.1.jpg');
@@ -60,13 +62,14 @@ img {
     border: 7px outset #f1f1f1;
     width: 20%;
     z-index :9
-  }
+}
+
 
 h4 {
     text-align: center;
 }
 .myForm {
-    padding: 3%;
+    padding: 4%;
     background-color: white;
     color: black;
 }
