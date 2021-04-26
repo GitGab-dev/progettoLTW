@@ -14,7 +14,7 @@
 <body>
 
     <?php
-    // define variables and set to empty values
+    $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
     $password = $email = "";
 
     ?>
@@ -40,7 +40,7 @@
 
 
         <div class="myFormDiv" id="loginFormDiv">
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="GET" class="myForm" onsubmit="return controllaLogin()">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="myForm" onsubmit="return controllaLogin()">
                 <div class="form-group">
                     <h4>Login</h4>
                     <label for="emailLogin">Indirizzo email</label>
@@ -65,17 +65,36 @@
 
         <?php
 
-        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-            if (empty($_GET["emailLogin"])) {
+            if (empty($_POST["emailLogin"])) {
+                echo "Errore";
             } else {
-                $email = test_input($_GET["emailLogin"]);
-                // check if e-mail address is well-formed
-                echo "<script>erroreLogin()</script>";
+                $email = test_input($_POST["emailLogin"]);
+                $q1 = "select * from users where email = $1";
+                $res = pg_query_params($dbconn,$q1, array($email));
+                if(!($line=pg_fetch_array($res, null, PGSQL_ASSOC))) {
+                    echo "<script>erroreLogin()</script>";
+                }
+                else{
+                    $password = md5($_POST['passLogin']);
+                    $q2 = "select * from users where email = $1 and password = $2";
+                    $res = pg_query_params($dbconn,$q2, array($email,$password));
+                    if (!($line=pg_fetch_array($res, null, PGSQL_ASSOC))) {
+                        echo "<script>erroreLogin()</script>";
+                    }
+                    else {
+                        session_start();
+                        $_SESSION['id'] = $line['id'];
+                        $_SESSION['username'] = $line['username'];
+                        header("Location: ../homepage/welcome.php");
+                    }
+                }
             }
-
-
-
+            
+        
+            pg_free_result($res); //libera la memoria
+            pg_close($dbconn); //disconnette
 
         }
 
