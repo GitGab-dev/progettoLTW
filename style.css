@@ -33,7 +33,7 @@ body {
     border-color: white;
     border-style: solid;
     background-color: rgba(54, 50, 50, 0.5);
-    width: 502px;
+    width: 510px;
     height: 200px;
     font-size: 200%;
     text-align: center;
@@ -72,4 +72,5 @@ h4 {
     padding: 4%;
     background-color: white;
     color: black;
+    
 }
