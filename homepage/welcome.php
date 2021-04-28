@@ -6,7 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="./style.css">
     <script lang="javascript" src="script.js"></script>
 </head>
@@ -25,9 +28,48 @@
         </div>
         <div class="btn-group">
             <a href="../creaevento/index.html"><button class="btn-lg btn-success">Crea Evento</button></a>
-            <button class="btn-lg btn-outline-success" onclick="return apriSearch()">Ricerca Evento</button>
+            <button type="button" class="btn-lg btn-outline-success" data-toggle="modal" data-target="#myModal">Cerca il tuo evento</button>
         </div>
     </nav>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Ricerca Evento</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <form action="" method="POST" class="myForm" id="ricercaEvento" onsubmit="return controllaSearch()">
+                        <div class="form-group">
+                            <label for="cercaCategoria">Categoria</label>
+                            <select id="cercaCategoria" class="form-control">
+                                <option selected value="default">Scegli...</option>
+                                <option value="cat1">Musica</option>
+                                <option value="cat2">Sport</option>
+                                <option value="cat3">Escursionismo</option>
+                                <option value="cat4">Varie</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cercaLuogo">Luogo</label>
+                            <input type="text" class="form-control" id="cercaLuogo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cercaDal">Dal</label>
+                            <input type="date" class="form-control" id="cercaDal" required>
+                            <br>
+                            <label for="cercaAl">A</label>
+                            <input type="date" class="form-control" id="cercaAl" required>
+                        </div>
+                        <div class="row justify-content-center">
+                            <button type="submit" class="btn btn-primary" id="cercaSubmit">Cerca</button><br>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="container">
         <table class="table table-striped">
@@ -63,7 +105,5 @@
             </tbody>
         </table>
     </div>
-
-</body>
 
 </html>

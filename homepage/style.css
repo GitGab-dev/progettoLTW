@@ -1,5 +1,4 @@
 body {
-    background-color:black;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -54,17 +53,6 @@ body {
 #bassoDx {
     position: absolute;
     right:0px; 
-}
-
-/*Form di Login*/
-.myFormDiv {
-    display: none;
-    position: fixed;
-    top: 20%;
-    left: 40.2%;
-    border: 7px outset #f1f1f1;
-    width: 20%;
-    z-index :9
 }
 
 
