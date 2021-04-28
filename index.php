@@ -73,8 +73,10 @@
                 $email = test_input($_POST["emailLogin"]);
                 $q1 = "select * from users where email = $1";
                 $res = pg_query_params($dbconn,$q1, array($email));
+
                 if(!($line=pg_fetch_array($res, null, PGSQL_ASSOC))) {
                     echo "<script>erroreLogin()</script>";
+                    echo "A";
                 }
                 else{
                     $password = md5($_POST['passLogin']);
@@ -82,6 +84,7 @@
                     $res = pg_query_params($dbconn,$q2, array($email,$password));
                     if (!($line=pg_fetch_array($res, null, PGSQL_ASSOC))) {
                         echo "<script>erroreLogin()</script>";
+                        echo "B";
                     }
                     else {
                         session_start();
