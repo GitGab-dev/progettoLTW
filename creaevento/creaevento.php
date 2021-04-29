@@ -16,7 +16,7 @@
 
 <body>
     <?php
-    if (!$_SESSION) header("Location: ../index.php");
+    if (!$_SESSION['id']) header("Location: ../index.php");
     else {
         session_start();
         $utente = $_SESSION['username'];

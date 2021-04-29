@@ -17,7 +17,7 @@
     $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
     $password = $email = "";
     session_start();
-    if ($_SESSION) session_unset();
+    if ($_SESSION['id']) session_unset();
     session_commit();
     ?>
 
@@ -135,7 +135,7 @@
                     <label for="cercaDal">Dal</label>
                     <input type="date" class="form-control" id="cercaDal" required>
                     <br>
-                    <label for="cercaAl">A</label>
+                    <label for="cercaAl">Al</label>
                     <input type="date" class="form-control" id="cercaAl" required>
                 </div>
                 <div class="row justify-content-center">
