@@ -31,7 +31,7 @@
         <button type="submit" form="form1" class="btn-lg btn-primary">Crea</button>
     </nav>
 
-    <div class="container mt-3 myFormDiv">
+    <div class="container myFormDiv">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="myForm" id="form1" enctype="multipart/form-data" onsubmit="return validaCreazione()">
             <div class="form-row">
                 <div class="form-group col-md-6">
@@ -105,9 +105,9 @@
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-        //TO-DO: Collegami  $_SESSION
-        $utente = "utenteTest";
-        $idUtente = 3241;
+        
+        $utente = $_SESSION['username'];
+        $idUtente = $_SESSION['id'];
 
         
 
@@ -117,7 +117,7 @@
         $data = test_input($_POST["creaData"]);
         $ora = test_input($_POST["creaOra"]);
 
-        $immagine = test_input($_FILES["creaImmagine"]["name"]);
+        $immagine = test_input($idUtente . "-" . $nome . "." . strtolower(pathinfo($_FILES["creaImmagine"]["name"], PATHINFO_EXTENSION)));
         $email = test_input($_POST["creaEmail"]);
         $telefono = test_input($_POST["creaTel"]);
         $descrizione = test_input($_POST["creaDesc"]);
@@ -128,7 +128,7 @@
         $res = pg_query_params($dbconn, $q1, array($nome, $categoria, $luogo, $data, $ora, $utente, $immagine, $email, $telefono, $descrizione));
 
         $target_dir = "../uploads/";
-        $target_file = $target_dir . $idUtente . "-" . $nome . "." . strtolower(pathinfo($_FILES["creaImmagine"]["name"], PATHINFO_EXTENSION));
+        $target_file = $target_dir . $immagine;
 
         if (move_uploaded_file($_FILES["creaImmagine"]["tmp_name"], $target_file)) {
             console_log("File uploadato con successo!");
@@ -136,7 +136,8 @@
             console_log("C'è stato un errore con l'upload");
         }
 
-        /*
+        /* //TO-DO inizia una sessione con idEvento(da prendere) e manda su VisualizzaEvento 
+
         session_start();
         $_SESSION['id'] = $line['id'];
         $_SESSION['username'] = $line['username'];
