@@ -16,11 +16,9 @@
     <?php
     $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
     $password = $email = "";
-    /*
     session_start();
     if ($_SESSION['id']) session_unset();
     session_commit();
-    */
     ?>
 
     <nav class="navbar navbar-light navbar-bg">

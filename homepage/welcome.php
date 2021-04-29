@@ -16,9 +16,12 @@
 
 <body>
     <?php
-    if (!$_SESSION['id']) header("Location: ../index.php");
+    session_start();
+    if (!$_SESSION['id']){
+        session_commit();
+        header("Location: ../index.php");
+    }
     else {
-        session_start();
         $utente = $_SESSION['username'];
         $idUtente = $_SESSION['id'];
         session_commit();
