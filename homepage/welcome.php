@@ -75,13 +75,20 @@
         <table class="table table-striped">
             <thead></thead>
             <tbody>
+                <?php
+                $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
+                $query = "SELECT * FROM public.events WHERE utente=$username";
+                $result = pg_query($query) or die ('Query failed: ' . pg_last_error());
+                while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)){
+                    ?>
                 <tr>
                     <td>
                         <div class="media border p-3">
-                            <img src="img_avatar3.png" alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:60px;">
+                        <?php echo"<img src='$line[filep]' alt='imgEvento' class='mr-3 mt-3 rounded-circle' style='width:60px'>";?>
                             <div class="media-body">
-                                <h4>John Doe <small><i>Posted on February 19, 2016</i></small></h4>
-                                <p>Lorem ipsum...</p>
+                                <h5><?php echo"$line[nome]";?> <small><i><?php echo"$line[data]";?></i></small></h5>
+                                <p>Luogo: <?php echo"$line[citta]";?></p>
+                                <p>Orario: <?php echo"$line[ora]";?></p>
                             </div>
                         </div>
                     </td>
@@ -92,16 +99,9 @@
                         </div>
                     </td>
                 </tr>
-                <tr>
-                    <td>Mary</td>
-                    <td>Moe</td>
-                    <td>mary@example.com</td>
-                </tr>
-                <tr>
-                    <td>July</td>
-                    <td>Dooley</td>
-                    <td>july@example.com</td>
-                </tr>
+                <?php 
+                    }
+                ?>
             </tbody>
         </table>
     </div>
