@@ -16,11 +16,12 @@
 
 <body>
     <?php
-    if (!(isset($_POST['loginButton']))) header("Location: ../index.php");
+    if (!$_SESSION) header("Location: ../index.php");
     else {
         session_start();
         $utente = $_SESSION['username'];
         $idUtente = $_SESSION['id'];
+        session_commit();
     }
     ?>
     <nav class="navbar navbar-light navbar-bg">
