@@ -15,14 +15,14 @@
 </head>
 
 <body>
-
     <?php
-    //TO-DO Variabili per il pg-connect
-    $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
-    $password = $email = "";
-
+    if (!(isset($_POST['loginButton']))) header("Location: ../index.php");
+    else {
+        session_start();
+        $utente = $_SESSION['username'];
+        $idUtente = $_SESSION['id'];
+    }
     ?>
-
     <nav class="navbar navbar-light navbar-bg">
         <a class="navbar-brand" href="./../index.html">
             <img src="../images/Ptogether.png" width="100" height="100" alt="Ptogether">
@@ -102,14 +102,8 @@
     </div>
 
     <?php
-
+    $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-        
-        $utente = $_SESSION['username'];
-        $idUtente = $_SESSION['id'];
-
-        
 
         $nome = test_input($_POST["creaNomeEvento"]);
         $categoria = (int)($_POST["creaCategoria"]);
@@ -123,9 +117,9 @@
         $descrizione = test_input($_POST["creaDesc"]);
 
         $q1 = "INSERT INTO public.events(
-                id, nome, categoria, citta, data, ora, utente, filep, email, telefono, descrizione, partecipanti)
-                VALUES (DEFAULT,$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 0);";
-        $res = pg_query_params($dbconn, $q1, array($nome, $categoria, $luogo, $data, $ora, $utente, $immagine, $email, $telefono, $descrizione));
+                id, nome, categoria, citta, data, ora, filep, email, telefono, descrizione, partecipanti, utente)
+                VALUES (DEFAULT,$1, $2, $3, $4, $5, $6, $7, $8, $9, 0, $10);";
+        $res = pg_query_params($dbconn, $q1, array($nome, $categoria, $luogo, $data, $ora, $immagine, $email, $telefono, $descrizione, $idUtente));
 
         $target_dir = "../uploads/";
         $target_file = $target_dir . $immagine;
@@ -136,20 +130,11 @@
             console_log("C'è stato un errore con l'upload");
         }
 
-        /* //TO-DO inizia una sessione con idEvento(da prendere) e manda su VisualizzaEvento 
-
-        session_start();
-        $_SESSION['id'] = $line['id'];
-        $_SESSION['username'] = $line['username'];
-        header("Location: ../homepage/welcome.php");*/
-
-
-
-
 
         pg_free_result($res); //libera la memoria
         pg_close($dbconn); //disconnette
 
+        header("Location: ../homepage/welcome.php");
     }
 
     function test_input($data)

@@ -15,20 +15,26 @@
 </head>
 
 <body>
+    <?php
+    if (!(isset($_POST['loginButton']))) header("Location: ../index.php");
+    else {
+        session_start();
+        $utente = $_SESSION['username'];
+        $idUtente = $_SESSION['id'];
+    }
+    ?>
     <nav class="navbar navbar-light navbar-bg">
         <a class="navbar-brand" href="./../index.html">
             <img src="../images/Ptogether.png" width="100" height="100" alt="Ptogether">
         </a>
         <span id="homeTitle">
-            <?php
-            session_start();
-            $username = $_SESSION['username'];
-            echo "Bentornato, $username";
-            ?></span>
+            <?php echo "Bentornato, $utente"; ?>
+        </span>
         </div>
         <div class="btn-group">
-            <a href="../creaevento/index.html"><button class="btn-lg btn-success">Crea Evento</button></a>
+            <a href="../creaevento/creaevento.php"><button class="btn-lg btn-success">Crea Evento</button></a>
             <button type="button" class="btn-lg btn-outline-success" data-toggle="modal" data-target="#myModal">Cerca il tuo evento</button>
+            <a href="../index.php"><button class="btn-lg btn-warning">Logout</button></a>
         </div>
     </nav>
     <div class="modal fade" id="myModal" role="dialog">
@@ -77,30 +83,30 @@
             <tbody>
                 <?php
                 $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
-                $query = "SELECT * FROM public.events WHERE utente='$username'";
-                $result = pg_query($query) or die ('Query failed: ' . pg_last_error());
-                while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)){
-                    ?>
-                <tr>
-                    <td>
-                        <div class="media border p-3">
-                        <?php echo"<img src=../uploads/" . $line["filep"] . " alt='imgEvento' class='mr-3 mt-3 rounded-circle' style='width:60px'>";?>
-                            <div class="media-body">
-                                <h5><?php echo"$line[nome]";?> <small><i><?php echo"$line[data]";?></i></small></h5>
-                                <p>Luogo: <?php echo"$line[citta]";?></p>
-                                <p>Orario: <?php echo"$line[ora]";?></p>
+                $query = "SELECT * FROM public.events WHERE utente='$idUtente'";
+                $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+                while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
+                ?>
+                    <tr>
+                        <td>
+                            <div class="media border p-3">
+                                <?php echo "<img src=../uploads/" . $line["filep"] . " alt='imgEvento' class='mr-3 mt-3 rounded-circle' width='170px' height='150px'>"; ?>
+                                <div class="media-body">
+                                    <h5><?php echo "$line[nome]"; ?> <small><i><?php echo "$line[data]"; ?></i></small></h5>
+                                    <p>Luogo: <?php echo "$line[citta]"; ?></p>
+                                    <p>Orario: <?php echo "$line[ora]"; ?></p>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="btn-group myButton">
-                            <button type="button" class="btn btn-info">Info</button>
-                            <button type="button" class="btn btn-secondary">Modifica</button>
-                        </div>
-                    </td>
-                </tr>
-                <?php 
-                    }
+                        </td>
+                        <td>
+                            <div class="btn-group myButton">
+                                <button type="button" class="btn btn-info">Info</button>
+                                <button type="button" class="btn btn-secondary">Modifica</button>
+                            </div>
+                        </td>
+                    </tr>
+                <?php
+                }
                 ?>
             </tbody>
         </table>

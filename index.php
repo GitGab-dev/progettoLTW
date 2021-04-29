@@ -16,7 +16,7 @@
     <?php
     $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
     $password = $email = "";
-
+    session_destroy();
     ?>
 
     <nav class="navbar navbar-light navbar-bg">
@@ -56,7 +56,7 @@
                 </div>
                 <br>
                 <div class="row justify-content-center">
-                    <button type="submit" class="btn btn-primary">Login</button><br>
+                    <button type="submit" class="btn btn-primary" name="loginButton">Login</button><br>
                 </div>
                 <label for="signUp">Non sei iscritto?</label>
                 <a href="" id="signUp">Crea un account</a>
