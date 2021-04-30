@@ -46,10 +46,10 @@
         $telefono = test_input($_POST["creaTel"]);
         $descrizione = test_input($_POST["creaDesc"]);
 
-        $q = "SELECT * FROM public.events WHERE nome=$1 AND utente=$2";
-        $res = pg_query_params($dbconn, $q, array($nome, $idUtente));
+        $q = "SELECT * FROM public.events WHERE nome=$1 AND utente=$2 AND data=$3";
+        $res = pg_query_params($dbconn, $q, array($nome, $idUtente, $data));
         if ($line = pg_fetch_array($res, null, PGSQL_ASSOC)) {
-            echo "Esiste già un evento creato da te con questo nome";
+            echo "Esiste già un evento creato da te con questo nome in questa data";
         } else {
 
 
