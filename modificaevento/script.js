@@ -9,3 +9,17 @@ function validaCreazione(){
         return false;
     }
 }
+
+function riempiForm(data){
+    document.getElementById("creaNomeEvento").value = data['nome'];
+    //Riempimento categoria
+    document.getElementById("creaCategoria").selectedIndex = data['categoria'];
+
+    document.getElementById("creaLuogo").value = data['citta'];
+    document.getElementById("creaData").value = data['data'];
+    document.getElementById("creaOra").value = data['ora'];
+    //img
+    document.getElementById("creaEmail").value = data['email'];
+    document.getElementById("creaTel").value = data['telefono'];
+    document.getElementById("creaDesc").value = data['descrizione'];
+}

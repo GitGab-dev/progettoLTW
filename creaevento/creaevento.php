@@ -33,8 +33,15 @@
         $luogo = test_input($_POST["creaLuogo"]);
         $data = test_input($_POST["creaData"]);
         $ora = test_input($_POST["creaOra"]);
+
         //TO_DO: idEvento per nome immagine e immagine di default
-        $immagine = test_input($idUtente . "-" . str_replace(" ","",$nome) . "." . strtolower(pathinfo($_FILES["creaImmagine"]["name"], PATHINFO_EXTENSION)));
+        //$immagine = test_input($idUtente . "-" . str_replace(" ","",$nome) . "." . strtolower(pathinfo($_FILES["creaImmagine"]["name"], PATHINFO_EXTENSION)));
+        $idEvento = getNextId($dbconn);
+
+        $check = $_FILES["creaImmagine"]["tmp_name"];
+        if ($check === "") $immagine = "default.png";
+        else $immagine = test_input($idEvento . "." . strtolower(pathinfo($_FILES["creaImmagine"]["name"], PATHINFO_EXTENSION)));
+
         $email = test_input($_POST["creaEmail"]);
         $telefono = test_input($_POST["creaTel"]);
         $descrizione = test_input($_POST["creaDesc"]);
@@ -44,14 +51,20 @@
         if ($line = pg_fetch_array($res, null, PGSQL_ASSOC)) {
             echo "Esiste già un evento creato da te con questo nome";
         } else {
+
+
             $q1 = "INSERT INTO public.events(
                 id, nome, categoria, citta, data, ora, filep, email, telefono, descrizione, partecipanti, utente)
                 VALUES (DEFAULT,$1, $2, $3, $4, $5, $6, $7, $8, $9, 0, $10);";
             $res = pg_query_params($dbconn, $q1, array($nome, $categoria, $luogo, $data, $ora, $immagine, $email, $telefono, $descrizione, $idUtente));
 
+
+
+            if ($check === "") header("Location: ../homepage/welcome.php");
+
+            //Uplaod immagine
             $target_dir = "../uploads/";
             $target_file = $target_dir . $immagine;
-
             if (move_uploaded_file($_FILES["creaImmagine"]["tmp_name"], $target_file)) {
                 //console_log("File uploadato con successo!");
                 header("Location: ../homepage/welcome.php");
@@ -76,6 +89,15 @@
         echo '<script>';
         echo 'console.log(' . json_encode($data) . ')';
         echo '</script>';
+    }
+
+    function getNextId($db)
+    {
+        $q = 'SELECT id FROM events ORDER BY id DESC LIMIT 1';
+        $result = pg_query($db, $q) or die('Query failed: ' . pg_last_error());
+        $line = pg_fetch_array($result, null, PGSQL_ASSOC);
+        if (!$line) return 0;
+        return (int)$line['id'] + 1;
     }
     ?>
     <nav class="navbar navbar-light navbar-bg">

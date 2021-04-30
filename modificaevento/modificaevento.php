@@ -34,6 +34,7 @@
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+    console_log($_POST);
     $nome = test_input($_POST["creaNomeEvento"]);
     $categoria = (int)($_POST["creaCategoria"]);
     $luogo = test_input($_POST["creaLuogo"]);
@@ -45,29 +46,35 @@
     $telefono = test_input($_POST["creaTel"]);
     $descrizione = test_input($_POST["creaDesc"]);
 
-    $q = "SELECT * FROM public.events WHERE nome=$1 AND utente=$2";
-    $res = pg_query_params($dbconn, $q, array($nome, $idUtente));
+    console_log($nome);
+    console_log($idUtente);
+    console_log((int)$_GET['id']);
+    $q = "SELECT * FROM public.events WHERE nome=$1 AND utente=$2 AND id!=$3";
+    $res = pg_query_params($dbconn, $q, array($nome, $idUtente,(int)$_GET['id']));
     if ($line = pg_fetch_array($res, null, PGSQL_ASSOC)) {
       echo "Esiste già un evento creato da te con questo nome";
     } else {
       $q1 = "UPDATE public.events
-                SET nome=$1, categoria=$2, citta=$3, data=$4, ora=$5, filep=$6, email=$7, telefono=$8, descrizione=$9
-                WHERE id=$10";
-      $res = pg_query_params($dbconn, $q1, array($nome, $categoria, $luogo, $data, $ora, $immagine, $email, $telefono, $descrizione, $_GET['id']));
+                SET nome=$1, categoria=$2, citta=$3, data=$4, ora=$5, email=$6, telefono=$7, descrizione=$8
+                WHERE id=$9";
 
+      $res = pg_query_params($dbconn, $q1, array($nome, $categoria, $luogo, $data, $ora, $email, $telefono, $descrizione,(int)$_GET['id']));
+      console_log($q1);
+      /*
       $target_dir = "../uploads/";
       $target_file = $target_dir . $immagine;
 
       if (move_uploaded_file($_FILES["creaImmagine"]["tmp_name"], $target_file)) {
         //console_log("File uploadato con successo!");
-        header("Location: ../homepage/welcome.php");
       } else {
         console_log("C'è stato un errore con l'upload");
-      }
+      }*/
+      header("Location: ../homepage/welcome.php");
     }
-
+    
     pg_free_result($res); //libera la memoria
     pg_close($dbconn); //disconnette
+    
   }
   function test_input($data)
   {
@@ -97,7 +104,7 @@
   </nav>
 
   <div class="container myFormDiv">
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="myForm" id="form1" enctype="multipart/form-data" onsubmit="return validaCreazione()">
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . '?id=' . $_GET['id']; ?>" method="POST" class="myForm" id="form1" enctype="multipart/form-data" onsubmit="return validaCreazione()">
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="creaNomeEvento">Nome Evento</label>
@@ -106,7 +113,7 @@
         <div class="form-group col-md-6">
           <label for="creaCategoria">Categoria</label>
           <select id="creaCategoria" name="creaCategoria" class="form-control">
-            <option selected value="default">Scegli...</option>
+            <option value="default">Scegli...</option>
             <option value="1">Musica</option>
             <option value="2">Sport</option>
             <option value="3">Escursionismo</option>
@@ -167,7 +174,8 @@
     
     <script>
       var data = <?php echo json_encode($line); ?>; // Don't forget the extra semicolon!
-      console.log(data);
+      //console.log(data);
+      riempiForm(data);
     </script>
 
   </div>

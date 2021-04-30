@@ -86,7 +86,7 @@
             <tbody>
                 <?php
                 $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
-                $query = "SELECT * FROM public.events WHERE utente='$idUtente'";
+                $query = "SELECT * FROM public.events WHERE utente='$idUtente' order by id desc";
                 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                 while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
                 ?>
