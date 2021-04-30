@@ -17,14 +17,65 @@
 <body>
     <?php
     session_start();
-    if (!$_SESSION['id']){
+    if (!$_SESSION['id']) {
         session_commit();
         header("Location: ../index.php");
-    }
-    else {
+    } else {
         $utente = $_SESSION['username'];
         $idUtente = $_SESSION['id'];
         session_commit();
+    }
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
+
+        $nome = test_input($_POST["creaNomeEvento"]);
+        $categoria = (int)($_POST["creaCategoria"]);
+        $luogo = test_input($_POST["creaLuogo"]);
+        $data = test_input($_POST["creaData"]);
+        $ora = test_input($_POST["creaOra"]);
+        //TO_DO: idEvento per nome immagine e immagine di default
+        $immagine = test_input($idUtente . "-" . str_replace(" ","",$nome) . "." . strtolower(pathinfo($_FILES["creaImmagine"]["name"], PATHINFO_EXTENSION)));
+        $email = test_input($_POST["creaEmail"]);
+        $telefono = test_input($_POST["creaTel"]);
+        $descrizione = test_input($_POST["creaDesc"]);
+
+        $q = "SELECT * FROM public.events WHERE nome=$1 AND utente=$2";
+        $res = pg_query_params($dbconn, $q, array($nome, $idUtente));
+        if ($line = pg_fetch_array($res, null, PGSQL_ASSOC)) {
+            echo "Esiste già un evento creato da te con questo nome";
+        } else {
+            $q1 = "INSERT INTO public.events(
+                id, nome, categoria, citta, data, ora, filep, email, telefono, descrizione, partecipanti, utente)
+                VALUES (DEFAULT,$1, $2, $3, $4, $5, $6, $7, $8, $9, 0, $10);";
+            $res = pg_query_params($dbconn, $q1, array($nome, $categoria, $luogo, $data, $ora, $immagine, $email, $telefono, $descrizione, $idUtente));
+
+            $target_dir = "../uploads/";
+            $target_file = $target_dir . $immagine;
+
+            if (move_uploaded_file($_FILES["creaImmagine"]["tmp_name"], $target_file)) {
+                //console_log("File uploadato con successo!");
+                header("Location: ../homepage/welcome.php");
+            } else {
+                console_log("C'è stato un errore con l'upload");
+            }
+        }
+
+        pg_free_result($res); //libera la memoria
+        pg_close($dbconn); //disconnette
+    }
+    function test_input($data)
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
+    function console_log($data)
+    {
+        echo '<script>';
+        echo 'console.log(' . json_encode($data) . ')';
+        echo '</script>';
     }
     ?>
     <nav class="navbar navbar-light navbar-bg">
@@ -104,58 +155,6 @@
             </div>
         </form>
     </div>
-
-    <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
-
-        $nome = test_input($_POST["creaNomeEvento"]);
-        $categoria = (int)($_POST["creaCategoria"]);
-        $luogo = test_input($_POST["creaLuogo"]);
-        $data = test_input($_POST["creaData"]);
-        $ora = test_input($_POST["creaOra"]);
-
-        $immagine = test_input($idUtente . "-" . $nome . "." . strtolower(pathinfo($_FILES["creaImmagine"]["name"], PATHINFO_EXTENSION)));
-        $email = test_input($_POST["creaEmail"]);
-        $telefono = test_input($_POST["creaTel"]);
-        $descrizione = test_input($_POST["creaDesc"]);
-
-        $q1 = "INSERT INTO public.events(
-                id, nome, categoria, citta, data, ora, filep, email, telefono, descrizione, partecipanti, utente)
-                VALUES (DEFAULT,$1, $2, $3, $4, $5, $6, $7, $8, $9, 0, $10);";
-        $res = pg_query_params($dbconn, $q1, array($nome, $categoria, $luogo, $data, $ora, $immagine, $email, $telefono, $descrizione, $idUtente));
-
-        $target_dir = "../uploads/";
-        $target_file = $target_dir . $immagine;
-
-        if (move_uploaded_file($_FILES["creaImmagine"]["tmp_name"], $target_file)) {
-            console_log("File uploadato con successo!");
-        } else {
-            console_log("C'è stato un errore con l'upload");
-        }
-
-
-        pg_free_result($res); //libera la memoria
-        pg_close($dbconn); //disconnette
-
-        header("Location: ../homepage/welcome.php");
-    }
-
-    function test_input($data)
-    {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
-
-    function console_log($data)
-    {
-        echo '<script>';
-        echo 'console.log(' . json_encode($data) . ')';
-        echo '</script>';
-    }
-    ?>
 
 </body>
 

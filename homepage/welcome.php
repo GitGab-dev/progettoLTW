@@ -17,11 +17,10 @@
 <body>
     <?php
     session_start();
-    if (!$_SESSION['id']){
+    if (!$_SESSION['id']) {
         session_commit();
         header("Location: ../index.php");
-    }
-    else {
+    } else {
         $utente = $_SESSION['username'];
         $idUtente = $_SESSION['id'];
         session_commit();
@@ -103,14 +102,19 @@
                             </div>
                         </td>
                         <td>
-                            <div class="btn-group myButton">
-                                <button type="button" class="btn btn-info">Info</button>
-                                <button type="button" class="btn btn-secondary">Modifica</button>
+                            <div class="media border p-3">
+                                <div class="btn-group myButton">
+                                    <button type="button" class="btn btn-info">Info</button>
+                                    <?php echo "<a href='../modificaevento/modificaevento.php?id=$line[id]'><button type='button' class='btn btn-secondary'>Modifica</button></a>";?>
+                                    
+                                </div>
                             </div>
                         </td>
+                        
                     </tr>
                 <?php
                 }
+                
                 ?>
             </tbody>
         </table>

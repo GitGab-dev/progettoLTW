@@ -93,7 +93,7 @@
                         $_SESSION['id'] = $line['id'];
                         $_SESSION['username'] = $line['username'];
                         session_commit();
-                        header("Location: ../homepage/welcome.php");
+                        header("Location: homepage/welcome.php");
                     }
                 }
             }
