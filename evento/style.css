@@ -1,0 +1,17 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+
+#homeTitle {
+    font-size: 300%;
+    font-weight: bold;
+    color: #86afb9;
+    text-shadow: 3px 3px 5px #082b34;
+}
+
+.navbar-bg {
+    background-color: #000000;
+    color: #86afb9;
+    margin: 0% 2%;
+}

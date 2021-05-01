@@ -25,6 +25,11 @@
         $idUtente = $_SESSION['id'];
         session_commit();
     }
+    $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
+    if (isset($_GET['delete'])) {
+        $q = "DELETE FROM public.events WHERE id=$1";
+        $res = pg_query_params($dbconn, $q, array($_GET['id']));
+      }
     ?>
     <nav class="navbar navbar-light navbar-bg">
         <a class="navbar-brand" href="./../index.html">
@@ -85,7 +90,6 @@
             <thead></thead>
             <tbody>
                 <?php
-                $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
                 $query = "SELECT * FROM public.events WHERE utente='$idUtente' order by id desc";
                 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                 while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
@@ -96,8 +100,10 @@
                                 <?php echo "<img src=../uploads/" . $line["filep"] . " alt='imgEvento' class='mr-3 mt-3 rounded-circle' width='170px' height='150px'>"; ?>
                                 <div class="media-body">
                                     <h5><?php echo "$line[nome]"; ?> <small><i><?php echo "$line[data]"; ?></i></small></h5>
+                                    <br>
                                     <p>Luogo: <?php echo "$line[citta]"; ?></p>
                                     <p>Orario: <?php echo "$line[ora]"; ?></p>
+                                    <p>Partecipanti: ~<?php echo " $line[partecipanti]"; ?></p>
                                 </div>
                             </div>
                         </td>

@@ -7,11 +7,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Crea Evento</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="./style.css">
-    <script lang="javascript" src="script.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script lang="javascript" src="script.js"></script>
+
 </head>
 
 <body>
@@ -27,9 +28,10 @@
   }
 
   $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
-  
+  $idEvento =  $_GET['id'];
+
   $q = "SELECT * FROM public.events WHERE id=$1";
-  $res = pg_query_params($dbconn, $q, array($_GET['id']));
+  $res = pg_query_params($dbconn, $q, array($idEvento));
   $line = pg_fetch_array($res, null, PGSQL_ASSOC);
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -48,9 +50,9 @@
 
     console_log($nome);
     console_log($idUtente);
-    console_log((int)$_GET['id']);
-    $q = "SELECT * FROM public.events WHERE nome=$1 AND utente=$2 AND id!=$3";
-    $res = pg_query_params($dbconn, $q, array($nome, $idUtente,(int)$_GET['id']));
+    console_log((int)$idEvento);
+    $q = "SELECT * FROM public.events WHERE nome=$1 AND utente=$2 AND id!=$3 AND data=$4";
+    $res = pg_query_params($dbconn, $q, array($nome, $idUtente, (int)$idEvento, $data));
     if ($line = pg_fetch_array($res, null, PGSQL_ASSOC)) {
       echo "Esiste già un evento creato da te con questo nome";
     } else {
@@ -58,7 +60,7 @@
                 SET nome=$1, categoria=$2, citta=$3, data=$4, ora=$5, email=$6, telefono=$7, descrizione=$8
                 WHERE id=$9";
 
-      $res = pg_query_params($dbconn, $q1, array($nome, $categoria, $luogo, $data, $ora, $email, $telefono, $descrizione,(int)$_GET['id']));
+      $res = pg_query_params($dbconn, $q1, array($nome, $categoria, $luogo, $data, $ora, $email, $telefono, $descrizione, (int)$idEvento));
       console_log($q1);
       /*
       $target_dir = "../uploads/";
@@ -71,11 +73,12 @@
       }*/
       header("Location: ../homepage/welcome.php");
     }
-    
+
     pg_free_result($res); //libera la memoria
     pg_close($dbconn); //disconnette
-    
+
   }
+
   function test_input($data)
   {
     $data = trim($data);
@@ -99,12 +102,12 @@
     <div class="btn-group">
       <button type="submit" form="form1" class="btn-lg btn-success">Salva</button>
       <a href=""><button class="btn-lg btn-warning">Annulla</button></a>
-      <button class="btn-lg btn-danger" onclick="return eliminaEvento()">Elimina</button>
+      <a <?php echo"href='../homepage/welcome.php?delete=true&id=$idEvento'";?>><button class="btn-lg btn-danger" id="elimina">Elimina</button></a>
     </div>
   </nav>
 
   <div class="container myFormDiv">
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . '?id=' . $_GET['id']; ?>" method="POST" class="myForm" id="form1" enctype="multipart/form-data" onsubmit="return validaCreazione()">
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . '?id=' . $idEvento; ?>" method="POST" class="myForm" id="form1" enctype="multipart/form-data" onsubmit="return validaCreazione()">
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="creaNomeEvento">Nome Evento</label>
@@ -171,7 +174,7 @@
         <textarea class="form-control" id="creaDesc" name="creaDesc" rows="4" cols="50"></textarea>
       </div>
     </form>
-    
+
     <script>
       var data = <?php echo json_encode($line); ?>; // Don't forget the extra semicolon!
       //console.log(data);
