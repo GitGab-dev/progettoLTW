@@ -28,7 +28,7 @@
   }
 
   $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
-  $idEvento =  $_GET['id'];
+  $idEvento = (int)$_GET['id'];
 
   $q = "SELECT * FROM public.events WHERE id=$1";
   $res = pg_query_params($dbconn, $q, array($idEvento));
@@ -43,16 +43,18 @@
     $data = test_input($_POST["creaData"]);
     $ora = test_input($_POST["creaOra"]);
     //TO_DO: idEvento per nome immagine e immagine di default
-    $immagine = test_input($idUtente . "-" . str_replace(" ", "", $nome) . "." . strtolower(pathinfo($_FILES["creaImmagine"]["name"], PATHINFO_EXTENSION)));
+    $check = $_FILES["creaImmagine"]["tmp_name"];
+    
+    
     $email = test_input($_POST["creaEmail"]);
     $telefono = test_input($_POST["creaTel"]);
     $descrizione = test_input($_POST["creaDesc"]);
 
     console_log($nome);
     console_log($idUtente);
-    console_log((int)$idEvento);
+    console_log(!$check);
     $q = "SELECT * FROM public.events WHERE nome=$1 AND utente=$2 AND id!=$3 AND data=$4";
-    $res = pg_query_params($dbconn, $q, array($nome, $idUtente, (int)$idEvento, $data));
+    $res = pg_query_params($dbconn, $q, array($nome, $idUtente, $idEvento, $data));
     if ($line = pg_fetch_array($res, null, PGSQL_ASSOC)) {
       echo "Esiste già un evento creato da te con questo nome";
     } else {
@@ -60,17 +62,28 @@
                 SET nome=$1, categoria=$2, citta=$3, data=$4, ora=$5, email=$6, telefono=$7, descrizione=$8
                 WHERE id=$9";
 
-      $res = pg_query_params($dbconn, $q1, array($nome, $categoria, $luogo, $data, $ora, $email, $telefono, $descrizione, (int)$idEvento));
+      $res = pg_query_params($dbconn, $q1, array($nome, $categoria, $luogo, $data, $ora, $email, $telefono, $descrizione, $idEvento));
       console_log($q1);
-      /*
-      $target_dir = "../uploads/";
-      $target_file = $target_dir . $immagine;
 
-      if (move_uploaded_file($_FILES["creaImmagine"]["tmp_name"], $target_file)) {
-        //console_log("File uploadato con successo!");
-      } else {
-        console_log("C'è stato un errore con l'upload");
-      }*/
+
+      //CONTROLLO IMMAGINE
+
+      if($check){
+        $immagine = test_input($idEvento . "." . strtolower(pathinfo($_FILES["creaImmagine"]["name"], PATHINFO_EXTENSION)));
+        if($line['filep'] == 'default.png'){
+          
+          pg_query($dbconn,"UPDATE events SET filep=$immagine WHERE id=$idEvento");
+        }
+        $target_dir = "../uploads/";
+        $target_file = $target_dir . $immagine;
+        console_log($target_file);
+        if (move_uploaded_file($_FILES["creaImmagine"]["tmp_name"], $target_file)) {
+          console_log("File uploadato con successo!");
+        } else {
+          console_log("C'è stato un errore con l'upload");
+        }
+      }
+      
       header("Location: ../homepage/welcome.php");
     }
 
@@ -148,12 +161,16 @@
           <input type="file" class="custom-file-input" id="creaImmagine" name="creaImmagine" accept="image/*">
           <label class="custom-file-label" for="creaImmagine">Scegli immagine...</label>
           <div class="invalid-feedback">File non valido</div>
+          <img id="myImage" src="#" alt="">
         </div>
 
         <script>
           $(".custom-file-input").on("change", function() {
             var fileName = $(this).val().split("\\").pop();
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+          });
+          $("#creaImmagine").change(function(){
+            readURL(this);
           });
         </script>
 

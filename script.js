@@ -1,46 +1,19 @@
-function apriLogin(){
-    let v = document.getElementById("loginFormDiv");
-    if(v.style.display=="block") v.style.display = "none";
-    else {
-        let v2 = document.getElementById("searchFormDiv");
-        if(v2.style.display == "block"){
-            v2.style.display = "none";
-        }
-        v.style.display = "block";
-        let myForm = v.children[0];
+function ricorda(){
+        let myForm = document.getElementById("logForm");
         let storedEmail = localStorage.getItem("e");
         let storedPassword = localStorage.getItem("p");
         if(storedEmail!=null && storedPassword!=null){
             myForm.emailLogin.value = storedEmail;
             myForm.passLogin.value = storedPassword;
         }
-    }
+    
 }
 
-function apriSearch(){
-    let v = document.getElementById("searchFormDiv");
-    if(v.style.display=="block") v.style.display = "none";
-    else {
-        let v2 = document.getElementById("loginFormDiv");
-        if(v2.style.display == "block"){
-            v2.style.display = "none";
-        }
-        v.style.display = "block";
-    }
-}
 
 function controllaLogin(){
-    let myForm = document.getElementById("loginFormDiv").firstElementChild;
+    let myForm = document.getElementById("logForm");
     let email = myForm.emailLogin.value;
     let pass = myForm.passLogin.value;
-    if(!email){
-        alert("Inserisci email");
-        return false;
-    }
-    if(!pass){
-        alert("Inserisci password");
-        return false;
-    }
 
     if(myForm.rememberBox.checked){
         localStorage.setItem("e", email);
@@ -51,7 +24,7 @@ function controllaLogin(){
 }
 
 function controllaSearch(){
-    let myForm = document.getElementById("searchFormDiv").firstElementChild;
+    let myForm = document.getElementById("ricercaEvento");
     let cat = myForm.cercaCategoria.value;
     let dataInit = myForm.cercaDal.valueAsNumber;
     let dataEnd = myForm.cercaAl.valueAsNumber;

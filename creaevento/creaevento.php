@@ -150,12 +150,16 @@
                     <input type="file" class="custom-file-input" id="creaImmagine" name="creaImmagine" accept="image/*">
                     <label class="custom-file-label" for="creaImmagine">Scegli immagine...</label>
                     <div class="invalid-feedback">File non valido</div>
+                    <img id="myImage" src="#" alt="">
                 </div>
 
                 <script>
                     $(".custom-file-input").on("change", function() {
                         var fileName = $(this).val().split("\\").pop();
                         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                    });
+                    $("#creaImmagine").change(function(){
+                        readURL(this);
                     });
                 </script>
 

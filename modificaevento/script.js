@@ -19,14 +19,26 @@ function validaCreazione(){
 
 function riempiForm(data){
     document.getElementById("creaNomeEvento").value = data['nome'];
-    //Riempimento categoria
     document.getElementById("creaCategoria").selectedIndex = data['categoria'];
 
     document.getElementById("creaLuogo").value = data['citta'];
     document.getElementById("creaData").value = data['data'];
     document.getElementById("creaOra").value = data['ora'];
     //img
+    document.getElementById("myImage").src = "../uploads/" + data['filep'];
     document.getElementById("creaEmail").value = data['email'];
     document.getElementById("creaTel").value = data['telefono'];
     document.getElementById("creaDesc").value = data['descrizione'];
+}
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        
+        reader.onload = function (e) {
+            $('#myImage').attr('src', e.target.result);
+        }
+        
+        reader.readAsDataURL(input.files[0]);
+    }
 }

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage</title>
+    <title>Risultati</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -15,34 +15,16 @@
 </head>
 
 <body>
-    <?php
-    session_start();
-    if (!$_SESSION['id']) {
-        session_commit();
-        header("Location: ../index.php");
-    } else {
-        $utente = $_SESSION['username'];
-        $idUtente = $_SESSION['id'];
-        session_commit();
-    }
-    $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
-    if (isset($_GET['delete'])) {
-        $q = "DELETE FROM public.events WHERE id=$1";
-        $res = pg_query_params($dbconn, $q, array($_GET['id']));
-      }
-    ?>
     <nav class="navbar navbar-light navbar-bg">
         <a class="navbar-brand" href="./../index.html">
             <img src="../images/Ptogether.png" width="100" height="100" alt="Ptogether">
         </a>
         <span id="homeTitle">
-            <?php echo "Bentornato, $utente"; ?>
+            Risultati Ricerca
         </span>
         </div>
         <div class="btn-group">
-            <a href="../creaevento/creaevento.php"><button class="btn-lg btn-success">Crea Evento</button></a>
             <button type="button" class="btn-lg btn-outline-success" data-toggle="modal" data-target="#myModal">Cerca il tuo evento</button>
-            <a href="../index.php"><button class="btn-lg btn-warning">Logout</button></a>
         </div>
     </nav>
     <div class="modal fade" id="myModal" role="dialog">
@@ -54,7 +36,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <form action="../ricercaevento/ricerca.php" method="POST" class="myForm" id="ricercaEvento" onsubmit="return controllaSearch()">
+                    <form action="ricerca.php" method="POST" class="myForm" id="ricercaEvento" onsubmit="return controllaSearch()">
                         <div class="form-group">
                             <label for="cercaCategoria">Categoria</label>
                             <select id="cercaCategoria" name="cercaCategoria" class="form-control">
@@ -90,9 +72,18 @@
             <thead></thead>
             <tbody>
                 <?php
-                $query = "SELECT * FROM public.events WHERE utente='$idUtente' order by id desc";
-                $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-                while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
+                $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
+
+                $categoria = (int)($_POST["cercaCategoria"]);
+                $luogo = test_input($_POST["cercaLuogo"]);
+                $dataDal = test_input($_POST["cercaDal"]);
+                $dataAl = test_input($_POST["cercaAl"]);
+
+                $query = "SELECT * FROM events WHERE categoria=$1 AND citta=$2 AND data >= $3 AND data <= $4";
+                console_log([$categoria,$luogo,$dataDal,$dataAl]);
+                
+                $result = pg_query_params($dbconn,$query,array($categoria,$luogo,$dataDal,$dataAl)) or die('Query failed: ' . pg_last_error());
+                while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)){
                 ?>
                     <tr>
                         <td>
@@ -109,19 +100,26 @@
                         </td>
                         <td>
                             <div class="media border p-3">
-                                <div class="btn-group myButton">
-                                    <!--<button type="button" class="btn btn-info">Info</button>-->
-                                    <?php echo "<a href='../evento/evento.php?id=$line[id]'><button type='button' class='btn btn-secondary'>Info</button></a>";?>
-                                    <?php echo "<a href='../modificaevento/modificaevento.php?id=$line[id]'><button type='button' class='btn btn-secondary'>Modifica</button></a>";?>
-                                    
-                                </div>
+                                <?php echo "<a href='../evento/evento.php?id=$line[id]'><button type='button' class='btn btn-secondary'>Info</button></a>";?>
                             </div>
                         </td>
                         
                     </tr>
                 <?php
                 }
-                
+                function test_input($data)
+                {
+                    $data = trim($data);
+                    $data = stripslashes($data);
+                    $data = htmlspecialchars($data);
+                    return $data;
+                }
+                function console_log($data)
+                {
+                    echo '<script>';
+                    echo 'console.log(' . json_encode($data) . ')';
+                    echo '</script>';
+                }
                 ?>
             </tbody>
         </table>

@@ -17,16 +17,7 @@
 
 <body>
   <?php
-  session_start();
-  if (!$_SESSION['id']) {
-    session_commit();
-    header("Location: ../index.php");
-  } else {
-    $utente = $_SESSION['username'];
-    $idUtente = $_SESSION['id'];
-    session_commit();
-  }
-
+ 
   $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
   $idEvento =  $_GET['id'];
 
