@@ -1,5 +1,6 @@
-body {
+html,body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    max-height: 100%;
 }
 
 
@@ -13,53 +14,19 @@ body {
 .navbar-bg {
     background-color: #000000;
     color: #86afb9;
+    height: 15vh;
 }
 
 
-
-#mainPart {
-    background-image: url('./images/happy-people-2.1.jpg');
-    background-position-x: center;
-    background-repeat: no-repeat;
-    color: #FFFFFF;    
-    height: 1050px;
+.myFull {
+    height: 85vh;
 }
 
-
-/*Celle di testo*/
-.myCell {
-    margin: 5% 10%;
-    padding: 17px;
-    border-color: white;
-    border-style: solid;
-    background-color: rgba(54, 50, 50, 0.5);
-    width: 510px;
-    height: 200px;
-    font-size: 200%;
-    text-align: center;
-    transition:all 0.3s ease;
-}
-
-.myCell:hover {
-    transform: scale(1.1);
-}
-
-#altoSin {
+.my-custom-scrollbar {
     position: relative;
-    left:0px; 
-}
-#bassoDx {
-    position: absolute;
-    right:0px; 
+    overflow: auto;
 }
 
-
-h4 {
-    text-align: center;
-}
-.myForm {
-    padding: 4%;
-    background-color: white;
-    color: black;
-    
+.table-wrapper-scroll-y {
+    display: block;
 }

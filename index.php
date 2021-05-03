@@ -25,27 +25,63 @@
     ?>
 
     <nav class="navbar navbar-light navbar-bg">
-        <a class="navbar-brand" href="#">
-            <img src="./images/Ptogether.png" width="100" height="100" alt="Ptogether">
-            <span id="homeTitle">Planning Together</span>
-            <span style=color:#86afb9>copyright by Gabriele & Filippo</span>
-        </a>
+        <a class="navbar-brand" href="#"><img src="./images/Ptogether.png" width="100" height="100" alt="Ptogether">
+       Planning Together
+        <span style=color:#86afb9>copyright by Gabriele & Filippo</span>
+        
         <div>
-
             <!--<button class="btn-lg btn-outline-success" onclick="return apriSearch()">Ricerca Evento</button>-->
             <div class="btn-group">
-                <button type="button" class="btn-lg btn-outline-success" data-toggle="modal" data-target="#myModalLogin" onclick="return ricorda()">Login</button>
-                <button type="button" class="btn-lg btn-outline-success" data-toggle="modal" data-target="#myModalSearch">Cerca il tuo evento</button>
+                <button type="button" class="btn-lg btn-info" data-toggle="modal" data-target="#myModalLogin" onclick="return ricorda()">Login</button>
+                <button type="button" class="btn-lg btn-info" data-toggle="modal" data-target="#myModalSearch">Cerca il tuo evento</button>
             </div>
         </div>
 
     </nav>
 
+    
+
     <!--CONTAINER IMG E TESTI-->
 
     <div id="mainPart">
+        <div id="demo" class="carousel slide" data-ride="carousel">
 
-        <p class="myCell" id="altoSin">Vuoi organizzare e pubblicizzare un evento? Iscriviti al nostro sito!</p>
+            <!-- Indicators -->
+            <ul class="carousel-indicators">
+                <li data-target="#demo" data-slide-to="0" class="active"></li>
+                <li data-target="#demo" data-slide-to="1"></li>
+                <li data-target="#demo" data-slide-to="2"></li>
+            </ul>
+
+            <!-- The slideshow -->
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="images/evento.jpg" class="img-fluid img-thumbnail" alt="evento" width="100%" height="100%">
+                </div>
+                <div class="carousel-item">
+                    <img src="images/planning.jpg" class="img-fluid img-thumbnail" alt="planning" width="100%" height="100%">
+                </div>
+                <div class="carousel-item">
+                    <img src="images/personefelici.jpeg" class="img-fluid img-thumbnail" alt="persone felici" width="100%" height="100%">
+                </div>
+            </div>
+
+            <!-- Left and right controls -->
+            <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#demo" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </a>
+        </div>
+
+
+        <!--<p class="myCell" id="altoSin">Vuoi organizzare e pubblicizzare un evento? Iscriviti al nostro sito!</p>-->
+
+
+
+
+
 
         <div class="modal fade" id="myModalLogin" role="dialog">
             <div class="modal-dialog">
@@ -167,7 +203,9 @@
                 </div>
             </div>
         </div>
-        <p class="myCell" id="bassoDx">Vuoi partecipare ad iniziative ed eventi? Dai uno sguardo alla sezione Search!</p>
+
+
+        <!--<p class="myCell" id="bassoDx">Vuoi partecipare ad iniziative ed eventi? Dai uno sguardo alla sezione Search!</p>-->
     </div>
 
 </body>

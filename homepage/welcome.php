@@ -29,7 +29,7 @@
     if (isset($_GET['delete'])) {
         $q = "DELETE FROM public.events WHERE id=$1";
         $res = pg_query_params($dbconn, $q, array($_GET['id']));
-      }
+    }
     ?>
     <nav class="navbar navbar-light navbar-bg">
         <a class="navbar-brand" href="./../index.html">
@@ -85,46 +85,65 @@
         </div>
     </div>
 
-    <div class="container">
-        <table class="table table-striped">
-            <thead></thead>
-            <tbody>
-                <?php
-                $query = "SELECT * FROM public.events WHERE utente='$idUtente' order by id desc";
-                $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-                while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-                ?>
-                    <tr>
-                        <td>
-                            <div class="media border p-3">
-                                <?php echo "<img src=../uploads/" . $line["filep"] . " alt='imgEvento' class='mr-3 mt-3 rounded-circle' width='170px' height='150px'>"; ?>
-                                <div class="media-body">
-                                    <h5><?php echo "$line[nome]"; ?> <small><i><?php echo "$line[data]"; ?></i></small></h5>
-                                    <br>
-                                    <p>Luogo: <?php echo "$line[citta]"; ?></p>
-                                    <p>Orario: <?php echo "$line[ora]"; ?></p>
-                                    <p>Partecipanti: ~<?php echo " $line[partecipanti]"; ?></p>
+
+
+
+
+    <div class="row container-fluid">
+        <div class="table-wrapper-scroll-y my-custom-scrollbar col-5 myFull">
+            <table class="table table-bordered table-striped">
+                <thead></thead>
+                <tbody>
+                    <?php
+                    $query = "SELECT * FROM public.events WHERE utente='$idUtente' order by id desc";
+                    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+                    while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
+                    ?>
+                        <tr>
+                            <td>
+                                <div class="media border p-3">
+                                    <?php echo "<img src=../uploads/" . $line["filep"] . " alt='imgEvento' class='mr-3 mt-3 rounded-circle' width='170px' height='150px'>"; ?>
+                                    <div class="media-body">
+                                        <h5><?php echo "$line[nome]"; ?> <small><i><?php echo "$line[data]"; ?></i></small></h5>
+                                        <br>
+                                        <p>Luogo: <?php echo "$line[citta]"; ?></p>
+                                        <p>Orario: <?php echo "$line[ora]"; ?></p>
+                                        <p>Partecipanti: ~<?php echo " $line[partecipanti]"; ?></p>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="media border p-3">
-                                <div class="btn-group myButton">
-                                    <!--<button type="button" class="btn btn-info">Info</button>-->
-                                    <?php echo "<a href='../evento/evento.php?id=$line[id]'><button type='button' class='btn btn-secondary'>Info</button></a>";?>
-                                    <?php echo "<a href='../modificaevento/modificaevento.php?id=$line[id]'><button type='button' class='btn btn-secondary'>Modifica</button></a>";?>
-                                    
+                            </td>
+                            <td>
+                                <div class="media border p-3">
+                                    <div class="btn-group myButton">
+                                        <!--<button type="button" class="btn btn-info">Info</button>-->
+                                        <?php echo "<button type='button' class='btn btn-secondary infoButton' id='$line[id]'>Info</button>"; ?>
+                                        <?php echo "<a href='../modificaevento/modificaevento.php?id=$line[id]'><button type='button' class='btn btn-secondary'>Modifica</button></a>"; ?>
+
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        
-                    </tr>
-                <?php
-                }
-                
-                ?>
-            </tbody>
-        </table>
+                            </td>
+
+                        </tr>
+                    <?php
+                    }
+
+                    ?>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-7" id="divEvento">
+            Evento selezionato
+        </div>
+
     </div>
+
+    <script>
+        $(document).ready(function() {
+            $(".infoButton").click(function(e) {
+                $("#divEvento").load("../evento/eventomin.php?id=" + e.target.id);
+            })
+        })
+    </script>
 
 </html>
