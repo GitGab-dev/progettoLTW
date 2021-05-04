@@ -11,9 +11,32 @@ body {
   }
 
 .navbar-bg{
-  background-color: rgba(113, 155, 211, 0.61);
+  background: linear-gradient(to right, rgba(113, 155, 211, 0.425), rgba(113, 155, 211, 0.945) );
+}
+  .navbar-bg:hover{
+  background: linear-gradient(to left, rgba(113, 155, 211, 0.425), rgba(113, 155, 211, 0.945) );
 }
 
 .btn-login{
   background-color: rgba(27, 71, 165, 0.788);
 }
+
+.myCell {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+ }
+
+#eventoText {
+  top: 30%;
+}
+
+#personefeliciText {
+  top: 63%;
+}
+
+#planningText {
+  top: 70%;
+}
+
+

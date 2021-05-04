@@ -29,19 +29,17 @@
             echo "Errore";
         } else {
             $email = test_input($_POST["emailLogin"]);
-            $q1 = "select * from users where email = $1";
+            $q1 = "SELECT * FROM users WHERE email = $1";
             $res = pg_query_params($dbconn, $q1, array($email));
 
             if (!($line = pg_fetch_array($res, null, PGSQL_ASSOC))) {
                 echo "<script>erroreLogin()</script>";
-                echo "A";
             } else {
                 $password = md5($_POST['passLogin']);
-                $q2 = "select * from users where email = $1 and password = $2";
+                $q2 = "SELECT * FROM users WHERE email = $1 and password = $2";
                 $res = pg_query_params($dbconn, $q2, array($email, $password));
                 if (!($line = pg_fetch_array($res, null, PGSQL_ASSOC))) {
                     echo "<script>erroreLogin()</script>";
-                    echo "B";
                 } else {
                     session_start();
                     $_SESSION['id'] = $line['id'];
@@ -68,10 +66,9 @@
 
     <nav class="navbar navbar-light navbar-bg">
         <a class="navbar-brand" href="#">
-            <img src="./images/Ptogether.png" width="22%" height="22%" alt="Ptogether">
+            <img id="logo" src="./images/Ptogether.png" width="20%" height="20%" alt="Ptogether">
             <span class="ml-5">Planning Together</span>
         </a>
-        <!--<button class="btn-lg btn-outline-success" onclick="return apriSearch()">Ricerca Evento</button>-->
         <div class="mr-5 nav-item btn-group">
             <button type="button" class="btn-lg btn-info" data-toggle="modal" data-target="#myModalLogin" onclick="return ricorda()">Login</button>
             <button type="button" class="btn-lg btn-info" data-toggle="modal" data-target="#myModalSearch">Cerca il tuo evento</button>
@@ -80,33 +77,32 @@
     </nav>
 
 
-
     <!--CONTAINER IMG E TESTI-->
 
     <div id="mainPart">
         <div id="demo" class="carousel slide" data-ride="carousel">
 
-            <!-- Indicators -->
             <ul class="carousel-indicators">
                 <li data-target="#demo" data-slide-to="0" class="active"></li>
                 <li data-target="#demo" data-slide-to="1"></li>
                 <li data-target="#demo" data-slide-to="2"></li>
             </ul>
 
-            <!-- The slideshow -->
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img src="images/evento.jpg" class="img-fluid img-thumbnail" alt="evento" width="100%" height="100%">
+                    <span class="myCell shadow-lg p-4 mb-4" id="eventoText">Vuoi partecipare ad iniziative ed eventi? Dai uno sguardo alla sezione Ricerca Eventi</span>
                 </div>
                 <div class="carousel-item">
                     <img src="images/planning.jpg" class="img-fluid img-thumbnail" alt="planning" width="100%" height="100%">
+                    <span class="myCell shadow-lg p-4 mb-4" id="planningText">Vuoi organizzare e pubblicizzare un evento? Iscriviti al nostro sito!</span>
                 </div>
                 <div class="carousel-item">
                     <img src="images/personefelici.jpeg" class="img-fluid img-thumbnail" alt="persone felici" width="100%" height="100%">
+                    <span class="myCell shadow-lg p-4 mb-4" id="personefeliciText">Realizzato da Gabriele & Filippo</span>
                 </div>
             </div>
-
-            <!-- Left and right controls -->
+            
             <a class="carousel-control-prev" href="#demo" data-slide="prev">
                 <span class="carousel-control-prev-icon"></span>
             </a>
@@ -115,8 +111,6 @@
             </a>
         </div>
 
-
-        <!--<p class="myCell" id="altoSin">Vuoi organizzare e pubblicizzare un evento? Iscriviti al nostro sito!</p>-->
 
         <!--<p class="myCell" id="bassoDx">Vuoi partecipare ad iniziative ed eventi? Dai uno sguardo alla sezione Search!</p>-->
     </div>
