@@ -28,37 +28,57 @@
     if (isset($_SESSION['id']) && $_SESSION['id']) session_unset();
     session_commit();
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["loginButton"])) {
+        $email = test_input($_POST["emailLogin"]);
+        $q1 = "SELECT * FROM users WHERE email = $1";
+        $res = pg_query_params($dbconn, $q1, array($email));
 
-        if (empty($_POST["emailLogin"])) {
-            echo "Errore";
+        if (!($line = pg_fetch_array($res, null, PGSQL_ASSOC))) {
+            echo "<script>erroreLogin()</script>";
         } else {
-            $email = test_input($_POST["emailLogin"]);
-            $q1 = "SELECT * FROM users WHERE email = $1";
-            $res = pg_query_params($dbconn, $q1, array($email));
-
+            $password = md5($_POST['passLogin']);
+            $q2 = "SELECT * FROM users WHERE email = $1 and password = $2";
+            $res = pg_query_params($dbconn, $q2, array($email, $password));
             if (!($line = pg_fetch_array($res, null, PGSQL_ASSOC))) {
                 echo "<script>erroreLogin()</script>";
             } else {
-                $password = md5($_POST['passLogin']);
-                $q2 = "SELECT * FROM users WHERE email = $1 and password = $2";
-                $res = pg_query_params($dbconn, $q2, array($email, $password));
-                if (!($line = pg_fetch_array($res, null, PGSQL_ASSOC))) {
-                    echo "<script>erroreLogin()</script>";
-                } else {
-                    session_start();
-                    $_SESSION['id'] = $line['id'];
-                    $_SESSION['username'] = $line['username'];
-                    session_commit();
-                    header("Location: homepage/welcome.php");
-                }
+                session_start();
+                $_SESSION['id'] = $line['id'];
+                $_SESSION['username'] = $line['email'];
+                session_commit();
+                header("Location: homepage/welcome.php");
             }
         }
-
-        pg_free_result($res); //libera la memoria
-        pg_close($dbconn); //disconnette
-
     }
+
+    else if(isset($_POST["signinButton"])) {
+        $email = test_input($_POST["emailLogin"]);
+        $q1 = "SELECT * FROM users WHERE email = $1";
+        $res = pg_query_params($dbconn, $q1, array($email));
+
+        if (($line = pg_fetch_array($res, null, PGSQL_ASSOC))) {
+            echo '<div class="alert alert-warning alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Warning!</strong> This alert box could indicate a warning that might need attention.
+          </div>';
+        } else {
+            $password = md5($_POST['passLogin']);
+            $q2 = "INSERT INTO users (id, email, password) VALUES (DEFAULT, $1, $2)";
+            $res = pg_query_params($dbconn, $q2, array($email, $password));
+            if ($res = pg_query_params($dbconn, $q2, array($email, $password))) {
+                echo '<div class="alert alert-success alert-dismissible fade show">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Success!</strong> This alert box could indicate a successful or positive action.
+              </div>';
+            } else {
+                echo "Si è verificato un errore";
+            }
+        }
+    }
+
+    pg_free_result($res); //libera la memoria
+    pg_close($dbconn); //disconnette
+
 
     function test_input($data)
     {
@@ -78,15 +98,22 @@
         <div class="mr-3 nav-item btn-group">
             <button type="button" class="btn-lg btn-info m-1" data-toggle="modal" data-target="#myModalLogin" onclick="return ricorda()">Login</button>
             <button type="button" class="btn-lg btn-info m-1" data-toggle="modal" data-target="#myModalSearch">Cerca il tuo evento</button>
+            <button type="button" class="btn-lg btn-info m-1" data-toggle="modal" data-target="#myModalSignin">Registrati</button>
         </div>
 
         <script>
             $("#logo").mouseover(function() {
-                    $(this).animate({height:"11%", width:"11%"}, "fast");
-                });
-                $("#logo").mouseleave(function() {
-                    $(this).animate({height:"10%", width:"10%"}, "fast");
-                });
+                $(this).animate({
+                    height: "11%",
+                    width: "11%"
+                }, "fast");
+            });
+            $("#logo").mouseleave(function() {
+                $(this).animate({
+                    height: "10%",
+                    width: "10%"
+                }, "fast");
+            });
         </script>
 
     </nav>
@@ -157,8 +184,8 @@
                 <div class="modal-body">
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="myForm" id="logForm" onsubmit="return controllaLogin()">
                         <div class="form-group">
-                            <label for="emailLogin">Indirizzo email</label>
-                            <input type="email" class="form-control" id="emailLogin" name="emailLogin" value="<?php echo $email; ?>" placeholder="Enter email" required>
+                            <label for="emailLogin">Nome Utente</label>
+                            <input type="email" class="form-control" id="emailLogin" name="emailLogin" value="<?php echo $email; ?>" placeholder="Nome Utente" required>
                         </div>
                         <div class="form-group">
                             <label for="passLogin">Password</label>
@@ -172,8 +199,36 @@
                         <div class="row justify-content-center">
                             <button type="submit" class="btn btn-primary" name="loginButton">Login</button><br>
                         </div>
-                        <label for="signUp">Non sei iscritto?</label>
-                        <a href="" id="signUp">Crea un account</a>
+                    </form>
+                    <label for="signinLogin">Non sei iscritto?</label>
+                    <a href=""id="signinLogin" data-toggle="modal" data-target="#myModalSignin">Registrati</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModalSignin" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Registrazione</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="myForm" id="signForm">
+                        <div class="form-group">
+                            <label for="emailLogin">Nome Utente</label>
+                            <input type="text" class="form-control" id="userSignin" name="userSignin" placeholder="Digita un nome utente" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="passLogin">Password</label>
+                            <input type="password" class="form-control" id="passSignin" name="passSignin" placeholder="Scegli una password" required>
+                        </div>
+                        <br>
+                        <div class="row justify-content-center">
+                            <button type="submit" class="btn btn-primary" name="signinButton">Registrati</button><br>
+                        </div>
                     </form>
                 </div>
             </div>

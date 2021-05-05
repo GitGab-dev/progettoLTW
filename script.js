@@ -49,7 +49,7 @@ function removeClass(e){
 }
 
 function erroreLogin(){
-    document.getElementById("loginFormDiv").style.display = "block";
+    document.getElementById("myModalLogin").style.display = "block";
 
     let email = document.getElementById("emailLogin")
 
