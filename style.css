@@ -1,5 +1,5 @@
 body {
-  
+  font-family: 'Pangolin', cursive;
   background-color: rgba(113, 139, 211, 0.438);
 }
 
@@ -13,18 +13,31 @@ body {
 .navbar-bg{
   background: linear-gradient(to right, rgba(113, 155, 211, 0.425), rgba(113, 155, 211, 0.945) );
 }
-  .navbar-bg:hover{
+
+.main-title {
+  font-size: 350%;
+  font-weight: 900;
+  font-family: 'Girassol', cursive;
+  text-shadow: -2px 0 rgba(34, 99, 196, 0.8), 0 2px rgba(34, 99, 196, 0.8) 2px 0 rgba(34, 99, 196, 0.8), 0 -2px rgba(34, 99, 196, 0.8);
+}
+
+
+.navbar-bg:hover{
   background: linear-gradient(to left, rgba(113, 155, 211, 0.425), rgba(113, 155, 211, 0.945) );
 }
 
-.btn-login{
-  background-color: rgba(27, 71, 165, 0.788);
-}
 
 .myCell {
   position: absolute;
   left: 50%;
   transform: translate(-50%, -50%);
+  background-color: rgba(194, 194, 194, 0.452);
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.363);
+  font-size:170%;
+  font-weight: bold;
+  color:rgba(238, 240, 241, 0.973);
+  text-shadow: -1px 0 rgb(100, 100, 100), 0 1px rgb(100, 100, 100), 1px 0 rgb(100, 100, 100), 0 -1px rgb(100, 100, 100);
  }
 
 #eventoText {

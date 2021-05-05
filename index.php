@@ -12,6 +12,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="./style.css">
     <script lang="javascript" src="script.js"></script>
+    <!--FONT USATO-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Girassol&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -65,19 +70,26 @@
     ?>
 
     <nav class="navbar navbar-light navbar-bg">
-        <a class="navbar-brand" href="#">
-            <img id="logo" src="./images/Ptogether.png" width="20%" height="20%" alt="Ptogether">
-            <span class="ml-5">Planning Together</span>
+        <a class="navbar-brand main-title" href="#">
+            <img id="logo" src="./images/Ptogether.png" width="10%" height="10%" alt="Ptogether">
+            <span class="ml-3">Planning Together</span>
         </a>
-        <div class="mr-5 nav-item btn-group">
-            <button type="button" class="btn-lg btn-info" data-toggle="modal" data-target="#myModalLogin" onclick="return ricorda()">Login</button>
-            <button type="button" class="btn-lg btn-info" data-toggle="modal" data-target="#myModalSearch">Cerca il tuo evento</button>
+
+        <div class="mr-3 nav-item btn-group">
+            <button type="button" class="btn-lg btn-info m-1" data-toggle="modal" data-target="#myModalLogin" onclick="return ricorda()">Login</button>
+            <button type="button" class="btn-lg btn-info m-1" data-toggle="modal" data-target="#myModalSearch">Cerca il tuo evento</button>
         </div>
 
+        <script>
+            $("#logo").mouseover(function() {
+                    $(this).animate({height:"11%", width:"11%"}, "fast");
+                });
+                $("#logo").mouseleave(function() {
+                    $(this).animate({height:"10%", width:"10%"}, "fast");
+                });
+        </script>
+
     </nav>
-
-
-    <!--CONTAINER IMG E TESTI-->
 
     <div id="mainPart">
         <div id="demo" class="carousel slide" data-ride="carousel">
@@ -90,19 +102,33 @@
 
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="images/evento.jpg" class="img-fluid img-thumbnail" alt="evento" width="100%" height="100%">
-                    <span class="myCell shadow-lg p-4 mb-4" id="eventoText">Vuoi partecipare ad iniziative ed eventi? Dai uno sguardo alla sezione Ricerca Eventi</span>
+                    <img src="images/evento2.jpg" class="img-fluid img-thumbnail" alt="evento" width="100%" height="100%">
+                    <span class="myCell shadow-lg p-4 mb-4" id="eventoText">Vuoi partecipare ad iniziative ed eventi?<br> Dai uno sguardo alla sezione Ricerca Eventi</span>
                 </div>
                 <div class="carousel-item">
-                    <img src="images/planning.jpg" class="img-fluid img-thumbnail" alt="planning" width="100%" height="100%">
-                    <span class="myCell shadow-lg p-4 mb-4" id="planningText">Vuoi organizzare e pubblicizzare un evento? Iscriviti al nostro sito!</span>
+                    <img src="images/planning2.jpg" class="img-fluid img-thumbnail" alt="planning" width="100%" height="100%">
+                    <span class="myCell shadow-lg p-4 mb-4" id="planningText">Vuoi organizzare e pubblicizzare un evento?<br> Iscriviti al nostro sito!</span>
                 </div>
                 <div class="carousel-item">
                     <img src="images/personefelici.jpeg" class="img-fluid img-thumbnail" alt="persone felici" width="100%" height="100%">
-                    <span class="myCell shadow-lg p-4 mb-4" id="personefeliciText">Realizzato da Gabriele & Filippo</span>
+                    <span class="myCell shadow-lg p-4 mb-4" id="personefeliciText">Divertirsi non è mai stato così semplice</span>
                 </div>
             </div>
-            
+
+            <script>
+                $(document).ready(function() {
+                    $(".myCell").hide();
+                });
+
+                $(".carousel-item").mouseenter(function() {
+                    $(this).children("span").fadeIn("slow");
+                });
+
+                $(".carousel-item").mouseleave(function() {
+                    $(this).children("span").fadeOut("slow");
+                });
+            </script>
+
             <a class="carousel-control-prev" href="#demo" data-slide="prev">
                 <span class="carousel-control-prev-icon"></span>
             </a>
@@ -110,9 +136,11 @@
                 <span class="carousel-control-next-icon"></span>
             </a>
         </div>
-
-
-        <!--<p class="myCell" id="bassoDx">Vuoi partecipare ad iniziative ed eventi? Dai uno sguardo alla sezione Search!</p>-->
+        <footer class="text-center text-white">
+            <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                © 2021 Copyright by Filippo & Gabriele: Progetti LTW 2020/2021
+            </div>
+        </footer>
     </div>
 
 

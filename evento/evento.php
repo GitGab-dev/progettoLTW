@@ -46,7 +46,7 @@
   }
   ?>
   <nav class="navbar navbar-light navbar-bg">
-    <a class="navbar-brand" href="./../index.html">
+    <a class="navbar-brand" href="./../index.php">
       <img src="../images/Ptogether.png" width="100" height="100" alt="Ptogether">
     </a>
     <span id="homeTitle"><?php echo "$line[nome]"; ?></span>
