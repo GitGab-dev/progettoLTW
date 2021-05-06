@@ -10,9 +10,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="style.css">
     <script lang="javascript" src="script.js"></script>
-    
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -33,19 +34,19 @@
     }
     ?>
     <nav class="navbar navbar-light navbar-bg">
-        <a class="navbar-brand" href="#">
-            <img src="../images/Ptogether.png" width="100" height="100" alt="Ptogether">
+        <a class="navbar-brand main-title" href="#">
+            <img id="logo" src="../images/Ptogether.png" width="10%" height="10%" alt="Ptogether">
+            <span class="ml-3"><?php echo "Bentornato, $utente"; ?></span>
         </a>
-        <span id="homeTitle">
-            <?php echo "Bentornato, $utente"; ?>
-        </span>
-        </div>
-        <div class="btn-group">
-            <a href="../creaevento/creaevento.php"><button class="btn-lg btn-success">Crea Evento</button></a>
-            <button type="button" class="btn-lg btn-outline-success" data-toggle="modal" data-target="#myModal">Cerca il tuo evento</button>
+
+
+        <div class="mr-3 nav-item btn-group">
+            <a href="../creaevento/creaevento.php"><button class="btn-lg btn-success mr-1">Crea Evento</button></a>
+            <button type="button" class="btn-lg btn-info mr-1" data-toggle="modal" data-target="#myModal">Cerca il tuo evento</button>
             <a href="../index.php"><button class="btn-lg btn-warning">Logout</button></a>
         </div>
     </nav>
+
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -105,19 +106,19 @@
                                 <div class="media border p-3">
                                     <?php echo "<img src=../uploads/" . $line["filep"] . " alt='imgEvento' class='mr-3 mt-3 rounded-circle' width='170px' height='150px'>"; ?>
                                     <div class="media-body">
-                                        <h5><?php echo "$line[nome]"; ?> <small><i><?php echo "$line[data]"; ?></i></small></h5>
+                                        <h5><?php echo "<strong>$line[nome]</strong>"; ?> <small><i><?php echo "$line[data]"; ?></i></small></h5>
                                         <br>
-                                        <p>Luogo: <?php echo "$line[citta]"; ?></p>
-                                        <p>Orario: <?php echo "$line[ora]"; ?></p>
-                                        <p>Partecipanti: ~<?php echo " $line[partecipanti]"; ?></p>
+                                        <p><strong>Luogo</strong>: <?php echo "$line[citta]"; ?></p>
+                                        <p><strong>Orario</strong>: <?php echo "$line[ora]"; ?></p>
+                                        <p><strong>Partecipanti</strong>: ~<?php echo " $line[partecipanti]"; ?></p>
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <div class="media border p-3">
-                                    <div class="btn-group myButton">
-                                        <!--<button type="button" class="btn btn-info">Info</button>-->
-                                        <?php echo "<button type='button' class='btn btn-secondary infoButton' id='$line[id]'>Info</button>"; ?>
+                                    <div class="mr-3 p-1 btn-group myButton">
+
+                                        <?php echo "<button type='button' class='btn btn-info infoButton' id='$line[id]'>Info</button>"; ?>
                                         <?php echo "<a href='../modificaevento/modificaevento.php?id=$line[id]'><button type='button' class='btn btn-secondary'>Modifica</button></a>"; ?>
 
                                     </div>
@@ -134,7 +135,6 @@
         </div>
 
         <div class="col-7" id="divEvento">
-            Evento selezionato
         </div>
 
     </div>

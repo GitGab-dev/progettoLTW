@@ -1,9 +1,9 @@
 function ricorda(){
         let myForm = document.getElementById("logForm");
-        let storedEmail = localStorage.getItem("e");
+        let storeduser = localStorage.getItem("e");
         let storedPassword = localStorage.getItem("p");
-        if(storedEmail!=null && storedPassword!=null){
-            myForm.emailLogin.value = storedEmail;
+        if(storeduser!=null && storedPassword!=null){
+            myForm.usernameLogin.value = storeduser;
             myForm.passLogin.value = storedPassword;
         }
     
@@ -12,11 +12,11 @@ function ricorda(){
 
 function controllaLogin(){
     let myForm = document.getElementById("logForm");
-    let email = myForm.emailLogin.value;
+    let user = myForm.usernameLogin.value;
     let pass = myForm.passLogin.value;
 
     if(myForm.rememberBox.checked){
-        localStorage.setItem("e", email);
+        localStorage.setItem("e", user);
         localStorage.setItem("p", pass);
     }
 
@@ -49,12 +49,11 @@ function removeClass(e){
 }
 
 function erroreLogin(){
-    document.getElementById("myModalLogin").style.display = "block";
 
-    let email = document.getElementById("emailLogin")
+    let user = document.getElementById("usernameLogin");
 
-    email.classList.add("border-danger");
-    email.addEventListener("click",removeClass);
+    user.classList.add("border-danger");
+    user.addEventListener("click",removeClass);
 
     let pass = document.getElementById("passLogin")
     pass.classList.add("border-danger");

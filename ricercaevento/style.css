@@ -1,65 +1,15 @@
 body {
     font-family: 'Pangolin', cursive;
+    background-color: rgba(113, 139, 211, 0.438);
 }
 
 
-#homeTitle {
-    font-size: 300%;
-    font-weight: bold;
-    color: #86afb9;
-    text-shadow: 3px 3px 5px #082b34;
-}
+.main-title {
+    font-size: 350%;
+    font-weight: 900;
+    text-shadow: -2px 0 rgba(34, 99, 196, 0.8), 0 2px rgba(34, 99, 196, 0.8) 2px 0 rgba(34, 99, 196, 0.8), 0 -2px rgba(34, 99, 196, 0.8);
+  }
 
 .navbar-bg {
-    background-color: #000000;
-    color: #86afb9;
-}
-
-
-
-#mainPart {
-    background-image: url('./images/happy-people-2.1.jpg');
-    background-position-x: center;
-    background-repeat: no-repeat;
-    color: #FFFFFF;    
-    height: 1050px;
-}
-
-
-/*Celle di testo*/
-.myCell {
-    margin: 5% 10%;
-    padding: 17px;
-    border-color: white;
-    border-style: solid;
-    background-color: rgba(54, 50, 50, 0.5);
-    width: 510px;
-    height: 200px;
-    font-size: 200%;
-    text-align: center;
-    transition:all 0.3s ease;
-}
-
-.myCell:hover {
-    transform: scale(1.1);
-}
-
-#altoSin {
-    position: relative;
-    left:0px; 
-}
-#bassoDx {
-    position: absolute;
-    right:0px; 
-}
-
-
-h4 {
-    text-align: center;
-}
-.myForm {
-    padding: 4%;
-    background-color: white;
-    color: black;
-    
+    background: linear-gradient(to right, rgba(113, 155, 211, 0.425), rgba(113, 155, 211, 0.945) );
 }

@@ -23,60 +23,61 @@
 
     <?php
     $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
-    $password = $email = "";
+    $password = $username = "";
     session_start();
     if (isset($_SESSION['id']) && $_SESSION['id']) session_unset();
     session_commit();
 
     if (isset($_POST["loginButton"])) {
-        $email = test_input($_POST["emailLogin"]);
-        $q1 = "SELECT * FROM users WHERE email = $1";
-        $res = pg_query_params($dbconn, $q1, array($email));
+        $username = $_POST["usernameLogin"];
+        $q1 = "SELECT * FROM users WHERE username = $1";
+        $res = pg_query_params($dbconn, $q1, array($username));
 
         if (!($line = pg_fetch_array($res, null, PGSQL_ASSOC))) {
-            echo "<script>erroreLogin()</script>";
+            //echo "<script>erroreLogin()</script>";
         } else {
             $password = md5($_POST['passLogin']);
-            $q2 = "SELECT * FROM users WHERE email = $1 and password = $2";
-            $res = pg_query_params($dbconn, $q2, array($email, $password));
+            $q2 = "SELECT * FROM users WHERE username = $1 and password = $2";
+            $res = pg_query_params($dbconn, $q2, array($username, $password));
             if (!($line = pg_fetch_array($res, null, PGSQL_ASSOC))) {
-                echo "<script>erroreLogin()</script>";
+                //echo "<script>erroreLogin()</script>";
             } else {
                 session_start();
                 $_SESSION['id'] = $line['id'];
-                $_SESSION['username'] = $line['email'];
+                $_SESSION['username'] = $line['username'];
                 session_commit();
                 header("Location: homepage/welcome.php");
             }
         }
+        pg_free_result($res); //libera la memoria
     }
 
     else if(isset($_POST["signinButton"])) {
-        $email = test_input($_POST["emailLogin"]);
-        $q1 = "SELECT * FROM users WHERE email = $1";
-        $res = pg_query_params($dbconn, $q1, array($email));
+        $username = $_POST["userSignin"];
+        $q1 = "SELECT * FROM users WHERE username = $1";
+        $res = pg_query_params($dbconn, $q1, array($username));
 
         if (($line = pg_fetch_array($res, null, PGSQL_ASSOC))) {
             echo '<div class="alert alert-warning alert-dismissible fade show">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Warning!</strong> This alert box could indicate a warning that might need attention.
+            <strong>Errore!</strong> Username già usato!
           </div>';
         } else {
-            $password = md5($_POST['passLogin']);
-            $q2 = "INSERT INTO users (id, email, password) VALUES (DEFAULT, $1, $2)";
-            $res = pg_query_params($dbconn, $q2, array($email, $password));
-            if ($res = pg_query_params($dbconn, $q2, array($email, $password))) {
+            $password = md5($_POST['passSignin']);
+            $q2 = "INSERT INTO users (id, username, password) VALUES (DEFAULT, $1, $2)";
+            if ($res = pg_query_params($dbconn, $q2, array($username, $password))) {
                 echo '<div class="alert alert-success alert-dismissible fade show">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Success!</strong> This alert box could indicate a successful or positive action.
+                <strong>Complimenti!</strong> La registrazione è andata a buon fine!
               </div>';
             } else {
                 echo "Si è verificato un errore";
             }
         }
+        pg_free_result($res); //libera la memoria
     }
 
-    pg_free_result($res); //libera la memoria
+    
     pg_close($dbconn); //disconnette
 
 
@@ -95,10 +96,11 @@
             <span class="ml-3">Planning Together</span>
         </a>
 
+
         <div class="mr-3 nav-item btn-group">
-            <button type="button" class="btn-lg btn-info m-1" data-toggle="modal" data-target="#myModalLogin" onclick="return ricorda()">Login</button>
-            <button type="button" class="btn-lg btn-info m-1" data-toggle="modal" data-target="#myModalSearch">Cerca il tuo evento</button>
-            <button type="button" class="btn-lg btn-info m-1" data-toggle="modal" data-target="#myModalSignin">Registrati</button>
+            <button type="button" class="btn-lg btn-info mr-1" data-toggle="modal" data-target="#myModalLogin" onclick="return ricorda()">Login</button>
+            <button type="button" class="btn-lg btn-info mr-1" data-toggle="modal" data-target="#myModalSignin">Registrati</button>
+            <button type="button" class="btn-lg btn-info mr-1" data-toggle="modal" data-target="#myModalSearch">Cerca il tuo evento</button>
         </div>
 
         <script>
@@ -184,8 +186,8 @@
                 <div class="modal-body">
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="myForm" id="logForm" onsubmit="return controllaLogin()">
                         <div class="form-group">
-                            <label for="emailLogin">Nome Utente</label>
-                            <input type="email" class="form-control" id="emailLogin" name="emailLogin" value="<?php echo $email; ?>" placeholder="Nome Utente" required>
+                            <label for="usernameLogin">Nome Utente</label>
+                            <input type="text" class="form-control" id="usernameLogin" name="usernameLogin" value="<?php echo $username; ?>" placeholder="Nome Utente" required>
                         </div>
                         <div class="form-group">
                             <label for="passLogin">Password</label>
@@ -197,11 +199,9 @@
                         </div>
                         <br>
                         <div class="row justify-content-center">
-                            <button type="submit" class="btn btn-primary" name="loginButton">Login</button><br>
+                            <button type="submit" class="btn btn-primary" name="loginButton" data-toggle="modal" data-target="#myModalLogin">Login</button><br>
                         </div>
                     </form>
-                    <label for="signinLogin">Non sei iscritto?</label>
-                    <a href=""id="signinLogin" data-toggle="modal" data-target="#myModalSignin">Registrati</a>
                 </div>
             </div>
         </div>
@@ -218,11 +218,11 @@
                 <div class="modal-body">
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="myForm" id="signForm">
                         <div class="form-group">
-                            <label for="emailLogin">Nome Utente</label>
+                            <label for="userSignin">Nome Utente</label>
                             <input type="text" class="form-control" id="userSignin" name="userSignin" placeholder="Digita un nome utente" required>
                         </div>
                         <div class="form-group">
-                            <label for="passLogin">Password</label>
+                            <label for="passSignin">Password</label>
                             <input type="password" class="form-control" id="passSignin" name="passSignin" placeholder="Scegli una password" required>
                         </div>
                         <br>

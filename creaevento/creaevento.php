@@ -10,8 +10,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="style.css">
     <script lang="javascript" src="script.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
 
 </head>
 
@@ -50,7 +52,10 @@
         $q = "SELECT * FROM public.events WHERE nome=$1 AND utente=$2 AND data=$3";
         $res = pg_query_params($dbconn, $q, array($nome, $idUtente, $data));
         if ($line = pg_fetch_array($res, null, PGSQL_ASSOC)) {
-            echo "Esiste già un evento creato da te con questo nome in questa data";
+            echo '<div class="alert alert-warning alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Errore!</strong> Esiste già un evento creato da te con stesso nome e stessa data!
+          </div>';
         } else {
 
 
@@ -102,14 +107,19 @@
     }
     ?>
     <nav class="navbar navbar-light navbar-bg">
-        <a class="navbar-brand" href="./../homepage/welcome.php">
-            <img src="../images/Ptogether.png" width="100" height="100" alt="Ptogether">
+        <a class="navbar-brand main-title" href="./../homepage/welcome.php">
+            <img id="logo" src="../images/Ptogether.png" width="10%" height="10%" alt="Ptogether">
+            <span class="ml-3">Crea Evento</span>
         </a>
-        <span id="homeTitle">Crea Evento</span>
-        <button type="submit" form="form1" class="btn-lg btn-primary">Crea</button>
+
+
+        <div class="mr-3 nav-item btn-group">
+            <button type="submit" form="form1" class="btn-lg btn-primary">Crea</button>
+        </div>
     </nav>
 
-    <div class="container myFormDiv">
+
+    <div class="container myFormDiv mt-3">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="myForm" id="form1" enctype="multipart/form-data" onsubmit="return validaCreazione()">
             <div class="form-row">
                 <div class="form-group col-md-6">
@@ -131,7 +141,7 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="creaLuogo">Luogo</label>
-                    <input list="provincia" class="form-control" id="creaLuogo" name="creaLuogo" required autocomplete="on">
+                    <input list="provincia" class="form-control" id="creaLuogo" name="creaLuogo" placeholder="Luogo dell'evento" required autocomplete="on">
                 </div>
                 <div class="form-group col-md-4">
                     <label for="creaData">Data</label>
@@ -143,26 +153,32 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="creaImmagine">Immagine</label>
+            <div class="form-row">
+                <div class="form-group col-8">
+                    <label for="creaImmagine">Immagine</label>
 
-                <div class="custom-file">
+                    <div class="custom-file">
 
-                    <input type="file" class="custom-file-input" id="creaImmagine" name="creaImmagine" accept="image/*">
-                    <label class="custom-file-label" for="creaImmagine">Scegli immagine...</label>
-                    <div class="invalid-feedback">File non valido</div>
-                    <img id="myImage" src="#" alt="">
+                        <input type="file" class="custom-file-input" id="creaImmagine" name="creaImmagine" accept="image/*">
+                        <label class="custom-file-label" for="creaImmagine">Scegli immagine...</label>
+                        <div class="invalid-feedback">File non valido</div>
+                        
+                    </div>
                 </div>
-
+                <div class="form-group col-4">
+                    <img id="myImage" src="../uploads/default.png" width="100%" height="100%" alt="">
+                </div>
                 <script>
                     $(".custom-file-input").on("change", function() {
                         var fileName = $(this).val().split("\\").pop();
                         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
                     });
-                    $("#creaImmagine").change(function(){
+                    $("#creaImmagine").change(function() {
                         readURL(this);
                     });
                 </script>
+
+
 
             </div>
             <div class="form-row">

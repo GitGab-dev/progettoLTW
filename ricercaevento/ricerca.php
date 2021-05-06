@@ -12,23 +12,26 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="./style.css">
     <script lang="javascript" src="script.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
 
-    
 </head>
 
 <body>
     <nav class="navbar navbar-light navbar-bg">
-        <a class="navbar-brand" href="./../index.php">
-            <img src="../images/Ptogether.png" width="100" height="100" alt="Ptogether">
+        <a class="navbar-brand main-title" href="./../index.php">
+            <img id="logo" src="../images/Ptogether.png" width="10%" height="10%" alt="Ptogether">
+            <span class="ml-3">Risultati Ricerca</span>
         </a>
-        <span id="homeTitle">
-            Risultati Ricerca
-        </span>
-        </div>
-        <div class="btn-group">
-            <button type="button" class="btn-lg btn-outline-success" data-toggle="modal" data-target="#myModal">Cerca il tuo evento</button>
+
+
+        <div class="mr-3 nav-item btn-group">
+
+            <button type="button" class="btn-lg btn-info mr-1" data-toggle="modal" data-target="#myModal">Cerca il tuo evento</button>
+
         </div>
     </nav>
+
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -81,7 +84,7 @@
                 $dataDal = test_input($_POST["cercaDal"]);
                 $dataAl = test_input($_POST["cercaAl"]);
 
-                $query = "SELECT * FROM events WHERE categoria=$1 AND citta=$2 AND data >= $3 AND data <= $4";
+                $query = "SELECT events.id,citta,ora,username,partecipanti,nome,data,filep FROM events,users WHERE categoria=$1 AND citta=$2 AND data >= $3 AND data <= $4 AND users.id = events.utente";
                 console_log([$categoria, $luogo, $dataDal, $dataAl]);
 
                 $result = pg_query_params($dbconn, $query, array($categoria, $luogo, $dataDal, $dataAl)) or die('Query failed: ' . pg_last_error());
@@ -90,19 +93,20 @@
                     <tr>
                         <td>
                             <div class="media border p-3">
-                                <?php echo "<img src=../uploads/" . $line["filep"] . " alt='imgEvento' class='mr-3 mt-3 rounded-circle' width='170px' height='150px'>"; ?>
+                                <?php echo "<img src=../uploads/" . $line["filep"] . " alt='imgEvento' class='mr-3 mt-3 rounded-circle' width='190px' height='170px'>"; ?>
                                 <div class="media-body">
-                                    <h5><?php echo "$line[nome]"; ?> <small><i><?php echo "$line[data]"; ?></i></small></h5>
+                                    <h5><?php echo "<strong>$line[nome]</strong>"; ?> <small><i><?php echo "$line[data]"; ?></i></small></h5>
                                     <br>
-                                    <p>Luogo: <?php echo "$line[citta]"; ?></p>
-                                    <p>Orario: <?php echo "$line[ora]"; ?></p>
-                                    <p>Partecipanti: ~<?php echo " $line[partecipanti]"; ?></p>
+                                    <p><strong>Luogo: </strong><?php echo "$line[citta]"; ?></p>
+                                    <p><strong>Orario: </strong><?php echo "$line[ora]"; ?></p>
+                                    <p><strong>Organizzatore: </strong><?php echo " $line[username]"; ?></p>
+                                    <p><strong>Partecipanti: </strong>~<?php echo " $line[partecipanti]"; ?></p>                                 
                                 </div>
                             </div>
                         </td>
                         <td>
                             <div class="media border p-3">
-                                <?php echo "<a href='../evento/evento.php?id=$line[id]'><button type='button' class='btn btn-secondary'>Info</button></a>"; ?>
+                                <?php echo "<a href='../evento/evento.php?id=$line[id]'><button type='button' class='m-3 btn btn-info'>Info</button></a>"; ?>
                             </div>
                         </td>
 
