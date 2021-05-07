@@ -34,13 +34,21 @@
         $res = pg_query_params($dbconn, $q1, array($username));
 
         if (!($line = pg_fetch_array($res, null, PGSQL_ASSOC))) {
-            //echo "<script>erroreLogin()</script>";
+            echo "<script>erroreLogin()</script>";
+            echo '<div class="alert alert-danger alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Errore!</strong> Nome utente o passowrd errati!
+            </div>';
         } else {
             $password = md5($_POST['passLogin']);
             $q2 = "SELECT * FROM users WHERE username = $1 and password = $2";
             $res = pg_query_params($dbconn, $q2, array($username, $password));
             if (!($line = pg_fetch_array($res, null, PGSQL_ASSOC))) {
-                //echo "<script>erroreLogin()</script>";
+                echo "<script>erroreLogin()</script>";
+                echo '<div class="alert alert-danger alert-dismissible fade show">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Errore!</strong> Nome utente o passowrd errati!
+                </div>';
             } else {
                 session_start();
                 $_SESSION['id'] = $line['id'];
@@ -50,9 +58,7 @@
             }
         }
         pg_free_result($res); //libera la memoria
-    }
-
-    else if(isset($_POST["signinButton"])) {
+    } else if (isset($_POST["signinButton"])) {
         $username = $_POST["userSignin"];
         $q1 = "SELECT * FROM users WHERE username = $1";
         $res = pg_query_params($dbconn, $q1, array($username));
@@ -77,7 +83,7 @@
         pg_free_result($res); //libera la memoria
     }
 
-    
+
     pg_close($dbconn); //disconnette
 
 
@@ -187,7 +193,7 @@
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="myForm" id="logForm" onsubmit="return controllaLogin()">
                         <div class="form-group">
                             <label for="usernameLogin">Nome Utente</label>
-                            <input type="text" class="form-control" id="usernameLogin" name="usernameLogin" value="<?php echo $username; ?>" placeholder="Nome Utente" required>
+                            <input type="text" class="form-control user" id="usernameLogin" name="usernameLogin" value="<?php echo $username; ?>" placeholder="Nome Utente" required>
                         </div>
                         <div class="form-group">
                             <label for="passLogin">Password</label>
@@ -219,7 +225,7 @@
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="myForm" id="signForm">
                         <div class="form-group">
                             <label for="userSignin">Nome Utente</label>
-                            <input type="text" class="form-control" id="userSignin" name="userSignin" placeholder="Digita un nome utente" required>
+                            <input type="text" class="form-control user" id="userSignin" name="userSignin" placeholder="Digita un nome utente" required>
                         </div>
                         <div class="form-group">
                             <label for="passSignin">Password</label>
@@ -274,6 +280,12 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(".modal").on("shown.bs.modal", function() {
+            $(".user").trigger("focus");
+        })
+    </script>
 
 
     <datalist id="provincia" name="provincia">

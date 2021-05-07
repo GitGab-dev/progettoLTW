@@ -58,7 +58,7 @@
           </div>';
         } else {
 
-
+            echo "che succede?";
             $q1 = "INSERT INTO public.events(
                 id, nome, categoria, citta, data, ora, filep, email, telefono, descrizione, partecipanti, utente)
                 VALUES (DEFAULT,$1, $2, $3, $4, $5, $6, $7, $8, $9, 0, $10);";

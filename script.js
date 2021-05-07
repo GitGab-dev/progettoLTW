@@ -49,7 +49,10 @@ function removeClass(e){
 }
 
 function erroreLogin(){
-
+    $(document).ready(function() {
+        $("#myModalLogin").modal("show");
+    });
+    /*
     let user = document.getElementById("usernameLogin");
 
     user.classList.add("border-danger");
@@ -58,5 +61,6 @@ function erroreLogin(){
     let pass = document.getElementById("passLogin")
     pass.classList.add("border-danger");
     pass.addEventListener("click",removeClass);
+    */
 }
 
