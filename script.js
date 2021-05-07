@@ -1,21 +1,21 @@
-function ricorda(){
-        let myForm = document.getElementById("logForm");
-        let storeduser = localStorage.getItem("e");
-        let storedPassword = localStorage.getItem("p");
-        if(storeduser!=null && storedPassword!=null){
-            myForm.usernameLogin.value = storeduser;
-            myForm.passLogin.value = storedPassword;
-        }
-    
+function ricorda() {
+    let myForm = document.getElementById("logForm");
+    let storeduser = localStorage.getItem("e");
+    let storedPassword = localStorage.getItem("p");
+    if (storeduser != null && storedPassword != null) {
+        myForm.usernameLogin.value = storeduser;
+        myForm.passLogin.value = storedPassword;
+    }
+
 }
 
 
-function controllaLogin(){
+function controllaLogin() {
     let myForm = document.getElementById("logForm");
     let user = myForm.usernameLogin.value;
     let pass = myForm.passLogin.value;
 
-    if(myForm.rememberBox.checked){
+    if (myForm.rememberBox.checked) {
         localStorage.setItem("e", user);
         localStorage.setItem("p", pass);
     }
@@ -23,7 +23,7 @@ function controllaLogin(){
     return true;
 }
 
-function controllaSearch(){
+function controllaSearch() {
     let myForm = document.getElementById("ricercaEvento");
     let cat = myForm.cercaCategoria.value;
     let dataInit = myForm.cercaDal.valueAsNumber;
@@ -35,7 +35,7 @@ function controllaSearch(){
     }
 
 
-    if(dataEnd - dataInit < 0) {
+    if (dataEnd - dataInit < 0) {
         alert("Le date non sono accettabili");
         return false;
     }
@@ -43,24 +43,42 @@ function controllaSearch(){
     return true;
 }
 
-function removeClass(e){
+function removeClass(e) {
     console.log(e);
     e.target.classList.remove("border-danger");
 }
 
-function erroreLogin(){
-    $(document).ready(function() {
+function erroreLogin() {
+    $(document).ready(function () {
         $("#myModalLogin").modal("show");
+
+        let user = document.getElementById("usernameLogin");
+        console.log(user);
+
+        user.classList.add("border-danger");
+        user.addEventListener("click", removeClass);
+
+        let pass = document.getElementById("passLogin");
+        pass.classList.add("border-danger");
+        pass.addEventListener("click", removeClass);
     });
-    /*
-    let user = document.getElementById("usernameLogin");
+}
 
-    user.classList.add("border-danger");
-    user.addEventListener("click",removeClass);
+function removeClassR(e) {
+    console.log(e);
+    e.target.classList.remove("border-warning");
+}
 
-    let pass = document.getElementById("passLogin")
-    pass.classList.add("border-danger");
-    pass.addEventListener("click",removeClass);
-    */
+function erroreRegistrazione() {
+    $(document).ready(function () {
+        $("#myModalSignin").modal("show");
+
+        let user = document.getElementById("userSignin");
+        console.log(user);
+
+        user.classList.add("border-warning");
+        user.addEventListener("click", removeClassR);
+
+    });
 }
 

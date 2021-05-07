@@ -37,7 +37,7 @@
             echo "<script>erroreLogin()</script>";
             echo '<div class="alert alert-danger alert-dismissible fade show">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Errore!</strong> Nome utente o passowrd errati!
+            <strong>Errore!</strong> Nome utente o password errati!
             </div>';
         } else {
             $password = md5($_POST['passLogin']);
@@ -47,7 +47,7 @@
                 echo "<script>erroreLogin()</script>";
                 echo '<div class="alert alert-danger alert-dismissible fade show">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Errore!</strong> Nome utente o passowrd errati!
+                <strong>Errore!</strong> Nome utente o password errati!
                 </div>';
             } else {
                 session_start();
@@ -64,6 +64,7 @@
         $res = pg_query_params($dbconn, $q1, array($username));
 
         if (($line = pg_fetch_array($res, null, PGSQL_ASSOC))) {
+            echo "<script>erroreRegistrazione()</script>";
             echo '<div class="alert alert-warning alert-dismissible fade show">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <strong>Errore!</strong> Username già usato!

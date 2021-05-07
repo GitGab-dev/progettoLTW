@@ -13,16 +13,16 @@
   <link rel="stylesheet" href="./style.css">
   <script lang="javascript" src="script.js"></script>
   <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
 </head>
 
 <body>
   <?php
- 
+
   $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
   $idEvento =  $_GET['id'];
 
-  $q = "SELECT * FROM public.events WHERE id=$1";
+  $q = "SELECT events.id,categoria,citta,ora,username,partecipanti,nome,data,filep,email,telefono,descrizione FROM events,users WHERE users.id = events.utente AND events.id=$1";
   $res = pg_query_params($dbconn, $q, array($idEvento));
   $line = pg_fetch_array($res, null, PGSQL_ASSOC);
   if ($line['categoria'] == "1") $categoria = "Musica";
@@ -30,9 +30,13 @@
   else if ($line['categoria'] == "3") $categoria = "Escursionismo";
   else $categoria = "Varie";
 
-  if (isset($_GET['partecipa'])) {
+  if (isset($_POST['fakeButton'])) {
     $q1 = "UPDATE public.events SET partecipanti=$1 WHERE id=$2";
     $res = pg_query_params($dbconn, $q1, array($line['partecipanti'] + 1, $idEvento));
+    echo '<div class="alert alert-success alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Partecipazione accettata!</strong> Hai deciso di partecipare!
+            </div>';
   }
 
   pg_free_result($res); //libera la memoria
@@ -46,32 +50,65 @@
     echo '</script>';
   }
   ?>
+
   <nav class="navbar navbar-light navbar-bg">
-    <a class="navbar-brand" href="./../index.php">
-      <img src="../images/Ptogether.png" width="100" height="100" alt="Ptogether">
+    <a class="navbar-brand main-title" href="#">
+      <img id="logo" src="../images/Ptogether.png" width="14.7%" height="14.7%" alt="Ptogether">
+      <span class="ml-3"><?php echo "$line[nome]"; ?></span>
     </a>
-    <span id="homeTitle"><?php echo "$line[nome]"; ?></span>
-    <div class="btn-group">
-      <a href=""><button class="btn-lg btn-warning">Torna alla Ricerca</button></a>
-      <a <?php echo "href='evento.php?partecipa=true&id=$idEvento'"; ?>><button class="btn-lg btn-danger" id="elimina">Partecipa</button></a>
+    <div class="mr-3 nav-item btn-group">
+      <a href="javascript:history.go(-1)"><button class="btn-lg btn-warning mr-1">Torna alla Ricerca</button></a>
+      <form method="POST" action="evento.php" id="fakeForm" style="display:none">
+        <input type="text" value='<?php echo "$line[id]";?>'>
+      </form>
+      <button name="fakeButton" type="submit" form="fakeForm" class="btn-lg btn-danger" id="partecipa">Partecipa</button>
     </div>
   </nav>
 
-  <div class="container mt-3">
+
+
+  <div class="container-fluid mr-3 my-3">
     <div class="media">
-      <div class="media-body">
-        <h3>Categoria: <?php echo "$categoria"; ?></h3>
-        <h3>Luogo: <?php echo "$line[citta]"; ?></h3>
-        <h3>Data: <?php echo "$line[data]"; ?></h3>
-        <h3>Orario: <?php echo "$line[ora]"; ?></h3>
-        <h3>Email di riferimento: <?php echo "$line[email]"; ?></h3>
-        <h3>Contatto telefonico: <?php echo "$line[telefono]"; ?></h3>
+      <div class="media-body mr-3">
+        <table class="table table-hover">
+          <tbody>
+            <tr>
+              <th>Categoria</th>
+              <td> <?php echo "$categoria"; ?></td>
+            </tr>
+            <tr>
+              <th>Luogo</th>
+              <td><?php echo "$line[citta]"; ?></td>
+            </tr>
+            <tr>
+              <th>Data</th>
+              <td><?php echo "$line[data]"; ?></td>
+            </tr>
+            <tr>
+              <th>Orario</th>
+              <td><?php echo "$line[ora]"; ?></td>
+            </tr>
+            <tr>
+              <th>Organizzatore</th>
+              <td><?php echo "$line[username]"; ?></td>
+            </tr>
+            <tr>
+              <th>Email</th>
+              <td><?php echo "$line[email]"; ?></td>
+            </tr>
+            <tr>
+              <th>Contatto telefonico</th>
+              <td><?php echo "$line[telefono]"; ?></td>
+            </tr>
+
+          </tbody>
+        </table>
       </div>
-      <?php echo "<img src=../uploads/" . $line["filep"] . " alt='imgEvento' class='img-thumbnail' width='60%' height='60%' >"; ?>
+      <?php echo "<img src=../uploads/" . $line["filep"] . " alt='imgEvento' class='img-thumbnail' width='40%' height='40%' >"; ?>
     </div>
     <div class="media-footer">
-        <h3>Dettagli evento:</h3>
-        <p><?php echo "$line[descrizione]"; ?></p>
+      <h3><strong>Dettagli evento:</strong></h3>
+      <h5><?php echo "$line[descrizione]"; ?></h5>
     </div>
   </div>
 </body>

@@ -1,17 +1,29 @@
 body {
     font-family: 'Pangolin', cursive;
+    background-color: rgba(113, 139, 211, 0.438);
 }
 
 
-#homeTitle {
-    font-size: 300%;
-    font-weight: bold;
-    color: #86afb9;
-    text-shadow: 3px 3px 5px #082b34;
-}
+
+.main-title {
+    font-size: 350%;
+    font-weight: 900;
+    text-shadow: -2px 0 rgba(34, 99, 196, 0.8), 0 2px rgba(34, 99, 196, 0.8) 2px 0 rgba(34, 99, 196, 0.8), 0 -2px rgba(34, 99, 196, 0.8);
+  }
 
 .navbar-bg {
-    background-color: #000000;
-    color: #86afb9;
-    margin: 0% 2%;
+    background: linear-gradient(to right, rgba(113, 155, 211, 0.425), rgba(113, 155, 211, 0.945) );
+}
+
+th,td,h3 {
+    font-size:30px;
+}
+
+
+th {
+    width: 40%;
+}
+
+td {
+    width: 60%;
 }

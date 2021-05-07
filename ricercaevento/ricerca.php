@@ -19,11 +19,10 @@
 
 <body>
     <nav class="navbar navbar-light navbar-bg">
-        <a class="navbar-brand main-title" href="./../index.php">
+        <a class="navbar-brand main-title" href="./../homepage/welcome.php">
             <img id="logo" src="../images/Ptogether.png" width="10%" height="10%" alt="Ptogether">
             <span class="ml-3">Risultati Ricerca</span>
         </a>
-
 
         <div class="mr-3 nav-item btn-group">
 
@@ -72,7 +71,7 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container mt-2">
         <table class="table table-striped">
             <thead></thead>
             <tbody>
@@ -95,12 +94,12 @@
                             <div class="media border p-3">
                                 <?php echo "<img src=../uploads/" . $line["filep"] . " alt='imgEvento' class='mr-3 mt-3 rounded-circle' width='190px' height='170px'>"; ?>
                                 <div class="media-body">
-                                    <h5><?php echo "<strong>$line[nome]</strong>"; ?> <small><i><?php echo "$line[data]"; ?></i></small></h5>
+                                    <h4><?php echo "<strong>$line[nome]</strong>"; ?> <small><i><?php echo "$line[data]"; ?></i></small></h4>
                                     <br>
                                     <p><strong>Luogo: </strong><?php echo "$line[citta]"; ?></p>
                                     <p><strong>Orario: </strong><?php echo "$line[ora]"; ?></p>
                                     <p><strong>Organizzatore: </strong><?php echo " $line[username]"; ?></p>
-                                    <p><strong>Partecipanti: </strong>~<?php echo " $line[partecipanti]"; ?></p>                                 
+                                    <p><strong>Partecipanti: </strong>~<?php echo " $line[partecipanti]"; ?></pp>                                 
                                 </div>
                             </div>
                         </td>

@@ -13,3 +13,7 @@ body {
 .navbar-bg {
     background: linear-gradient(to right, rgba(113, 155, 211, 0.425), rgba(113, 155, 211, 0.945) );
 }
+
+p {
+    font-size: 20px;
+}
