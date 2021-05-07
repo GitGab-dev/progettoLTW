@@ -57,6 +57,10 @@
         <table class="table table-hover">
           <tbody>
             <tr>
+              <th>Nome Evento</th>
+              <td> <?php echo "$line[nome]"; ?></td>
+            </tr>
+            <tr>
               <th>Categoria</th>
               <td> <?php echo "$categoria"; ?></td>
             </tr>

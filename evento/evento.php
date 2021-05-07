@@ -22,7 +22,7 @@
   $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
   $idEvento =  $_GET['id'];
 
-  $q = "SELECT events.id,categoria,citta,ora,username,partecipanti,nome,data,filep,email,telefono,descrizione FROM events,users WHERE users.id = events.utente AND events.id=$1";
+  $q = "SELECT categoria,citta,ora,username,partecipanti,nome,data,filep,email,telefono,descrizione FROM events,users WHERE users.id = events.utente AND events.id=$1";
   $res = pg_query_params($dbconn, $q, array($idEvento));
   $line = pg_fetch_array($res, null, PGSQL_ASSOC);
   if ($line['categoria'] == "1") $categoria = "Musica";
@@ -32,7 +32,7 @@
 
   if (isset($_POST['fakeButton'])) {
     $q1 = "UPDATE public.events SET partecipanti=$1 WHERE id=$2";
-    $res = pg_query_params($dbconn, $q1, array($line['partecipanti'] + 1, $idEvento));
+    $res = pg_query_params($dbconn, $q1, array($_POST['partecipanti'] + 1, $idEvento));
     echo '<div class="alert alert-success alert-dismissible fade show">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <strong>Partecipazione accettata!</strong> Hai deciso di partecipare!
@@ -58,16 +58,16 @@
     </a>
     <div class="mr-3 nav-item btn-group">
       <a href="javascript:history.go(-1)"><button class="btn-lg btn-warning mr-1">Torna alla Ricerca</button></a>
-      <form method="POST" action="evento.php" id="fakeForm" style="display:none">
-        <input type="text" value='<?php echo "$line[id]";?>'>
+      <form method="POST" <?php echo "action='evento.php?id=$idEvento";?>' id="fakeForm" style="display:none">
+        <input type="text" name="partecipanti" value='<?php echo "$line[partecipanti]";?>'>
       </form>
-      <button name="fakeButton" type="submit" form="fakeForm" class="btn-lg btn-danger" id="partecipa">Partecipa</button>
+      <button name="fakeButton" type="submit" form="fakeForm" class="btn-lg btn-success" id="partecipa">Partecipa</button>
     </div>
   </nav>
 
 
 
-  <div class="container-fluid mr-3 my-3">
+  <div class="container mt-3">
     <div class="media">
       <div class="media-body mr-3">
         <table class="table table-hover">

@@ -91,7 +91,7 @@
 
 
 
-    <div class="row container-fluid">
+    <div class="row container-fluid mt-2">
         <div class="table-wrapper-scroll-y my-custom-scrollbar col-5 myFull">
             <table class="table table-bordered table-striped">
                 <thead></thead>
