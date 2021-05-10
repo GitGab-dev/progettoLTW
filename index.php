@@ -108,7 +108,7 @@
     <nav class="navbar navbar-light navbar-bg">
         <a class="navbar-brand main-title" href="#">
             <img id="logo" src="./images/Ptogether.png" width="85px" height="85px" alt="Ptogether">
-            <span class="ml-3">Planning Together</span>
+            <span class="ml-3" id="titolo">Planning Together</span>
         </a>
 
 
@@ -121,16 +121,20 @@
         <script>
             $("#logo").mouseover(function() {
                 $(this).animate({
-                    height: "11%",
-                    width: "11%"
+                    height: "95px",
+                    width: "95px"
                 }, "fast");
             });
             $("#logo").mouseleave(function() {
                 $(this).animate({
-                    height: "10%",
-                    width: "10%"
+                    height: "85px",
+                    width: "85px"
                 }, "fast");
             });
+            $(document).ready(function(){
+                $("#titolo").hide().fadeIn(2500).animate({"font-size": "150%"});
+                $("#titolo").animate({"font-size": "100%"});
+});     
         </script>
 
     </nav>
