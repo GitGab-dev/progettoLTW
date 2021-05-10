@@ -12,21 +12,36 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="./style.css">
     <script lang="javascript" src="script.js"></script>
+    <script src="https://kit.fontawesome.com/fa878af576.js" crossorigin="anonymous"></script>
+
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500&display=swap" rel="stylesheet"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Karla&family=Raleway:wght@400;500&display=swap" rel="stylesheet"> 
 
 </head>
+<?php 
+$dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
+if (isset($_POST['fakeButton'])) {
+    $q1 = "UPDATE public.events SET partecipanti=$1 WHERE id=$2";
+    $res = pg_query_params($dbconn, $q1, array($_POST['partecipanti'] + 1, $_POST['id']));
+    echo '<div class="alert alert-success alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Partecipazione accettata!</strong> Hai deciso di partecipare!
+            </div>';
+  }
+?>
 
 <body>
     <nav class="navbar navbar-light navbar-bg">
         <a class="navbar-brand main-title" href="./../homepage/welcome.php">
-            <img id="logo" src="../images/Ptogether.png" width="10%" height="10%" alt="Ptogether">
+            <img id="logo" src="../images/Ptogether.png" width="85px" height="85px" alt="Ptogether">
             <span class="ml-3">Risultati Ricerca</span>
         </a>
 
         <div class="mr-3 nav-item btn-group">
 
-            <button type="button" class="btn-lg btn-info mr-1" data-toggle="modal" data-target="#myModal">Cerca il tuo evento</button>
+            <button type="button" class="btn-lg btn-blue mr-1" data-toggle="modal" data-target="#myModal"><i class="fa fa-search"></i> Cerca il tuo evento</button>
 
         </div>
     </nav>
@@ -40,6 +55,7 @@
                 </div>
 
                 <div class="modal-body">
+                    <div id="divErroreSearch"></div>
                     <form action="ricerca.php" method="POST" class="myForm" id="ricercaEvento" onsubmit="return controllaSearch()">
                         <div class="form-group">
                             <label for="cercaCategoria">Categoria</label>
@@ -63,7 +79,7 @@
                             <input type="date" class="form-control" id="cercaAl" name="cercaAl" required>
                         </div>
                         <div class="row justify-content-center">
-                            <button type="submit" class="btn btn-primary" id="cercaSubmit">Cerca</button><br>
+                            <button type="submit" class="btn btn-blue" id="cercaSubmit">Cerca</button><br>
                         </div>
                     </form>
                 </div>
@@ -71,13 +87,11 @@
         </div>
     </div>
 
-    <div class="container mt-2">
-        <table class="table table-striped">
+    <div class="container mt-5">
+        <table class="table table-striped cell">
             <thead></thead>
             <tbody>
                 <?php
-                $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
-
                 $categoria = (int)($_POST["cercaCategoria"]);
                 $luogo = test_input($_POST["cercaLuogo"]);
                 $dataDal = test_input($_POST["cercaDal"]);
@@ -104,8 +118,8 @@
                             </div>
                         </td>
                         <td>
-                            <div class="media border p-3">
-                                <?php echo "<a href='../evento/evento.php?id=$line[id]'><button type='button' class='m-3 btn btn-info'>Info</button></a>"; ?>
+                            <div class="media border p-3 pl-5">
+                                <?php echo "<a href='../evento/evento.php?categoria=$categoria&luogo=$luogo&dataDal=$dataDal&dataAl=$dataAl&id=$line[id]'><button type='button' class='m-3 btn btn-blue'><i class='fas fa-clipboard-list'></i> Info</button></a>"; ?>
                             </div>
                         </td>
 

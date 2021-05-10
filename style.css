@@ -1,6 +1,7 @@
 body {
-  font-family: 'Pangolin', cursive;
-  background-color: rgba(113, 139, 211, 0.438);
+  font-family: 'Raleway', sans-serif;
+  background: rgb(2,0,36);
+background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(0,41,93,1) 56%, rgba(31,94,175,1) 100%);
 }
 
 
@@ -11,7 +12,22 @@ body {
   }
 
 .navbar-bg{
-  background: linear-gradient(to right, rgba(113, 155, 211, 0.425), rgba(113, 155, 211, 0.945) );
+  background-color:whitesmoke;
+}
+
+button, .myCell, .modal {
+  font-family: 'Karla', sans-serif;
+}
+
+.btn-blue {
+  background-color: #154b92;
+  border-color: #0F4284;
+  color: white;
+}
+
+.btn-blue:hover{
+  background-color: #0c2e5c;
+  color: white;
 }
 
 .main-title {
@@ -20,12 +36,6 @@ body {
   font-family: 'Girassol', cursive;
   text-shadow: -2px 0 rgba(34, 99, 196, 0.8), 0 2px rgba(34, 99, 196, 0.8) 2px 0 rgba(34, 99, 196, 0.8), 0 -2px rgba(34, 99, 196, 0.8);
 }
-
-
-.navbar-bg:hover{
-  background: linear-gradient(to left, rgba(113, 155, 211, 0.425), rgba(113, 155, 211, 0.945) );
-}
-
 
 .myCell {
   position: absolute;
@@ -50,6 +60,10 @@ body {
 
 #planningText {
   top: 70%;
+  text-shadow: -1px 0 rgb(0, 0, 0), 0 1px rgb(0, 0, 0), 1px 0 rgb(0, 0, 0), 0 -1px rgb(0, 0, 0);
 }
 
 
+a, a:hover{
+  color:#333
+}

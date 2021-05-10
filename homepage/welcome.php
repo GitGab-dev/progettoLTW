@@ -10,10 +10,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/fa878af576.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
     <script lang="javascript" src="script.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500&display=swap" rel="stylesheet"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Karla&family=Raleway:wght@400;500&display=swap" rel="stylesheet"> 
 </head>
 
 <body>
@@ -35,15 +38,15 @@
     ?>
     <nav class="navbar navbar-light navbar-bg">
         <a class="navbar-brand main-title" href="#">
-            <img id="logo" src="../images/Ptogether.png" width="10%" height="10%" alt="Ptogether">
-            <span class="ml-3"><?php echo "Bentornato, $utente"; ?></span>
+            <img id="logo" src="../images/Ptogether.png" width="85px" height="85px" alt="Ptogether">
+            <span class="ml-3" id="bentornato"><?php echo "Bentornato, $utente"; ?></span>
         </a>
 
 
         <div class="mr-3 nav-item btn-group">
-            <a href="../creaevento/creaevento.php"><button class="btn-lg btn-success mr-1">Crea Evento</button></a>
-            <button type="button" class="btn-lg btn-info mr-1" data-toggle="modal" data-target="#myModal">Cerca il tuo evento</button>
-            <a href="../index.php"><button class="btn-lg btn-warning">Logout</button></a>
+            <a href="../creaevento/creaevento.php"><button class="btn-lg btn-success mr-1"><i class="far fa-calendar-plus"></i> Crea Evento</button></a>
+            <button type="button" class="btn-lg btn-blue mr-1" data-toggle="modal" data-target="#myModal"><i class="fa fa-search"></i> Cerca il tuo evento</button>
+            <a href="../index.php"><button class="btn-lg btn-warning"><i class="fas fa-door-open"></i> Logout</button></a>
         </div>
     </nav>
 
@@ -56,6 +59,7 @@
                 </div>
 
                 <div class="modal-body">
+                <div id="divErroreSearch"></div>
                     <form action="../ricercaevento/ricerca.php" method="POST" class="myForm" id="ricercaEvento" onsubmit="return controllaSearch()">
                         <div class="form-group">
                             <label for="cercaCategoria">Categoria</label>
@@ -79,7 +83,7 @@
                             <input type="date" class="form-control" id="cercaAl" name="cercaAl" required>
                         </div>
                         <div class="row justify-content-center">
-                            <button type="submit" class="btn btn-primary" id="cercaSubmit">Cerca</button><br>
+                            <button type="submit" class="btn btn-blue" id="cercaSubmit">Cerca</button><br>
                         </div>
                     </form>
                 </div>
@@ -91,9 +95,9 @@
 
 
 
-    <div class="row container-fluid mt-2">
-        <div class="table-wrapper-scroll-y my-custom-scrollbar col-5 myFull">
-            <table class="table table-bordered table-striped">
+    <div class="row container-fluid mt-2 ">
+        <div class="table-wrapper-scroll-y my-custom-scrollbar col-5 myFull ">
+            <table class="table table-striped cell">
                 <thead></thead>
                 <tbody>
                     <?php
@@ -116,10 +120,10 @@
                             </td>
                             <td>
                                 <div class="media border p-3">
-                                    <div class="mr-3 p-1 btn-group myButton">
+                                    <div class="mr-3 p-3 pl-5 btn-group myButton">
 
-                                        <?php echo "<button type='button' class='btn btn-info infoButton' id='$line[id]'>Info</button>"; ?>
-                                        <?php echo "<a href='../modificaevento/modificaevento.php?id=$line[id]'><button type='button' class='btn btn-secondary'>Modifica</button></a>"; ?>
+                                        <?php echo "<button type='button' class='btn btn-blue infoButton' id='$line[id]'><i class='fas fa-clipboard-list'></i> Info</button>"; ?>
+                                        <?php echo "<a href='../modificaevento/modificaevento.php?id=$line[id]'><button type='button' class='btn btn-secondary'><i class='fas fa-pencil-alt'></i> Modifica</button></a>"; ?>
 
                                     </div>
                                 </div>

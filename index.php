@@ -10,13 +10,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="./style.css">
+    <script src="https://kit.fontawesome.com/fa878af576.js" crossorigin="anonymous"></script>
     <script lang="javascript" src="script.js"></script>
     <!--FONT USATO-->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Girassol&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Karla&family=Raleway:wght@400;500&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -58,6 +62,7 @@
             }
         }
         pg_free_result($res); //libera la memoria
+
     } else if (isset($_POST["signinButton"])) {
         $username = $_POST["userSignin"];
         $q1 = "SELECT * FROM users WHERE username = $1";
@@ -97,17 +102,20 @@
     }
     ?>
 
+
+
+
     <nav class="navbar navbar-light navbar-bg">
         <a class="navbar-brand main-title" href="#">
-            <img id="logo" src="./images/Ptogether.png" width="10%" height="10%" alt="Ptogether">
+            <img id="logo" src="./images/Ptogether.png" width="85px" height="85px" alt="Ptogether">
             <span class="ml-3">Planning Together</span>
         </a>
 
 
         <div class="mr-3 nav-item btn-group">
-            <button type="button" class="btn-lg btn-info mr-1" data-toggle="modal" data-target="#myModalLogin" onclick="return ricorda()">Login</button>
-            <button type="button" class="btn-lg btn-info mr-1" data-toggle="modal" data-target="#myModalSignin">Registrati</button>
-            <button type="button" class="btn-lg btn-info mr-1" data-toggle="modal" data-target="#myModalSearch">Cerca il tuo evento</button>
+            <button type="button" class="btn-lg btn-blue mr-1" data-toggle="modal" data-target="#myModalLogin" onclick="return ricorda()">Login</button>
+            <button type="button" class="btn-lg btn-blue mr-1" data-toggle="modal" data-target="#myModalSignin">Registrati</button>
+            <button type="button" class="btn-lg btn-blue mr-1" data-toggle="modal" data-target="#myModalSearch"><i class="fa fa-search"></i> Cerca il tuo evento</button>
         </div>
 
         <script>
@@ -173,7 +181,7 @@
             </a>
         </div>
         <footer class="text-center text-white">
-            <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            <div class="text-center text-dark p-3" style="background-color: rgba(255, 255, 255, 0.8);">
                 © 2021 Copyright by Filippo & Gabriele: Progetti LTW 2020/2021
             </div>
         </footer>
@@ -191,6 +199,7 @@
                 </div>
 
                 <div class="modal-body">
+
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="myForm" id="logForm" onsubmit="return controllaLogin()">
                         <div class="form-group">
                             <label for="usernameLogin">Nome Utente</label>
@@ -198,7 +207,12 @@
                         </div>
                         <div class="form-group">
                             <label for="passLogin">Password</label>
-                            <input type="password" class="form-control" id="passLogin" name="passLogin" value="<?php echo $password; ?>" placeholder="Password" required>
+                            <div class="input-group" id="show_hide_password">
+                                <input type="password" class="form-control" id="passLogin" name="passLogin" placeholder="Password" required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a></span>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="rememberBox">
@@ -206,7 +220,7 @@
                         </div>
                         <br>
                         <div class="row justify-content-center">
-                            <button type="submit" class="btn btn-primary" name="loginButton" data-toggle="modal" data-target="#myModalLogin">Login</button><br>
+                            <button type="submit" class="btn btn-blue" name="loginButton" data-toggle="modal" data-target="#myModalLogin">Login</button><br>
                         </div>
                     </form>
                 </div>
@@ -223,18 +237,33 @@
                 </div>
 
                 <div class="modal-body">
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="myForm" id="signForm">
+                    <div id="divErroreSignin"></div>
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="myForm" id="signForm" onsubmit="return controllaSignin()">
                         <div class="form-group">
                             <label for="userSignin">Nome Utente</label>
-                            <input type="text" class="form-control user" id="userSignin" name="userSignin" placeholder="Digita un nome utente" required>
+                            <input type="text" class="form-control user" id="userSignin" name="userSignin" placeholder="Digita un nome utente" maxlength="20" required>
                         </div>
                         <div class="form-group">
                             <label for="passSignin">Password</label>
-                            <input type="password" class="form-control" id="passSignin" name="passSignin" placeholder="Scegli una password" required>
+                            <div class="input-group" id="show_hide_password">
+                                <input type="password" class="form-control" id="passSignin" name="passSignin" placeholder="Scegli una password" required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="passSigninBis">Password</label>
+                            <div class="input-group" id="show_hide_password">
+                                <input type="password" class="form-control" id="passSigninBis" name="passSigninBis" placeholder="Ripeti la password" required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a></span>
+                                </div>
+                            </div>
                         </div>
                         <br>
                         <div class="row justify-content-center">
-                            <button type="submit" class="btn btn-primary" name="signinButton">Registrati</button><br>
+                            <button type="submit" class="btn btn-blue" name="signinButton">Registrati</button><br>
                         </div>
                     </form>
                 </div>
@@ -251,6 +280,7 @@
                 </div>
 
                 <div class="modal-body">
+                    <div id="divErroreSearch"></div>
                     <form action="ricercaevento/ricerca.php" method="POST" class="myForm" id="ricercaEvento" onsubmit="return controllaSearch()">
                         <div class="form-group">
                             <label for="cercaCategoria">Categoria</label>
@@ -274,7 +304,7 @@
                             <input type="date" class="form-control" id="cercaAl" name="cercaAl" required>
                         </div>
                         <div class="row justify-content-center">
-                            <button type="submit" class="btn btn-primary" id="cercaSubmit">Cerca</button><br>
+                            <button type="submit" class="btn btn-blue" id="cercaSubmit">Cerca</button><br>
                         </div>
                     </form>
                 </div>
@@ -286,6 +316,23 @@
         $(".modal").on("shown.bs.modal", function() {
             $(".user").trigger("focus");
         })
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $("#show_hide_password a").on('click', function(event) {
+                event.preventDefault();
+                if ($('#show_hide_password input').attr("type") == "text") {
+                    $('#show_hide_password input').attr('type', 'password');
+                    $('#show_hide_password i').addClass("fa-eye-slash");
+                    $('#show_hide_password i').removeClass("fa-eye");
+                } else if ($('#show_hide_password input').attr("type") == "password") {
+                    $('#show_hide_password input').attr('type', 'text');
+                    $('#show_hide_password i').removeClass("fa-eye-slash");
+                    $('#show_hide_password i').addClass("fa-eye");
+                }
+            });
+        });
     </script>
 
 

@@ -1,19 +1,42 @@
+
 body {
-    font-family: 'Pangolin', cursive;
-    background-color: rgba(113, 139, 211, 0.438);
+    
+    font-family: 'Raleway', sans-serif;
+    background: rgb(2,0,36);
+    /*background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(0,41,93,1) 56%, rgba(31,94,175,1) 100%);*/
+    background-color: #00285D;
+    
 }
 
-
 .main-title {
-    font-size: 350%;
+    font-size: 300%;
     font-weight: 900;
     text-shadow: -2px 0 rgba(34, 99, 196, 0.8), 0 2px rgba(34, 99, 196, 0.8) 2px 0 rgba(34, 99, 196, 0.8), 0 -2px rgba(34, 99, 196, 0.8);
   }
 
+button, #myModal {
+    font-family: 'Karla', sans-serif;
+}
+
 .navbar-bg {
-    background: linear-gradient(to right, rgba(113, 155, 211, 0.425), rgba(113, 155, 211, 0.945) );
+    background: whitesmoke;
 }
 
 p {
     font-size: 20px;
+}
+
+.cell {
+    background-color: rgba(255,255,255,0.6);
+}
+
+.btn-blue {
+    background-color: #154b92;
+    border-color: #0F4284;
+    color: white;
+}
+
+.btn-blue:hover{
+    background-color: #0c2e5c;
+    color: white;
 }

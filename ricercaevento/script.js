@@ -6,16 +6,19 @@ function controllaSearch(){
     let dataEnd = ricercaEvento.cercaAl.valueAsNumber;
 
     if (cat == "default") {
-        alert("Scegli la categoria");
+        let d = document.getElementById("divErroreSearch");
+        d.innerHTML='<div class="alert alert-danger fade show"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Attenzione!</strong> Devi scegliere una categoria!</div>';
+        d.style.display = "block";
         return false;
     }
 
 
-    if(dataEnd - dataInit < 0) {
-        alert("Le date non sono accettabili");
+    if (dataEnd - dataInit < 0) {
+        let d = document.getElementById("divErroreSearch");
+        d.innerHTML='<div class="alert alert-danger fade show"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Attenzione!</strong> Le date non sono accettabili!</div>';
+        d.style.display = "block";
         return false;
     }
 
     return true;
 }
-

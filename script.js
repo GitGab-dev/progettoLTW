@@ -30,17 +30,29 @@ function controllaSearch() {
     let dataEnd = myForm.cercaAl.valueAsNumber;
 
     if (cat == "default") {
-        alert("Scegli la categoria");
+        let d = document.getElementById("divErroreSearch");
+        d.innerHTML='<div class="alert alert-danger fade show"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Attenzione!</strong> Devi scegliere una categoria!</div>';
+        d.style.display = "block";
         return false;
     }
 
 
     if (dataEnd - dataInit < 0) {
-        alert("Le date non sono accettabili");
+        let d = document.getElementById("divErroreSearch");
+        d.innerHTML='<div class="alert alert-danger fade show"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Attenzione!</strong> Le date non sono accettabili!</div>';
+        d.style.display = "block";
         return false;
     }
 
     return true;
+}
+
+function controllaSignin() {
+    if (document.getElementById("passSignin").value == document.getElementById("passSigninBis").value) return true;
+    let d = document.getElementById("divErroreSignin");
+    d.innerHTML='<div class="alert alert-danger fade show"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Attenzione!</strong> Le password non coincidono!</div>';
+    d.style.display = "block";
+    return false;
 }
 
 function removeClass(e) {

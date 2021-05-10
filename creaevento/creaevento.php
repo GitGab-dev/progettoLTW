@@ -12,8 +12,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <script lang="javascript" src="script.js"></script>
+    <script src="https://kit.fontawesome.com/fa878af576.js" crossorigin="anonymous"></script>
+
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Karla&family=Raleway:wght@400;500&display=swap" rel="stylesheet">
 
 </head>
 
@@ -106,25 +110,28 @@
         return (int)$line['id'] + 1;
     }
     ?>
+
+    <div id="divErroreCrea"></div>
+
     <nav class="navbar navbar-light navbar-bg">
         <a class="navbar-brand main-title" href="./../homepage/welcome.php">
-            <img id="logo" src="../images/Ptogether.png" width="10%" height="10%" alt="Ptogether">
+            <img id="logo" src="../images/Ptogether.png" width="85px" height="85px" alt="Ptogether">
             <span class="ml-3">Crea Evento</span>
         </a>
 
 
         <div class="mr-3 nav-item btn-group">
-            <button type="submit" form="form1" class="btn-lg btn-primary">Crea</button>
+            <button type="submit" form="form1" class="btn-lg btn-success"><i class="fas fa-calendar-plus"></i> Crea</button>
         </div>
     </nav>
 
 
-    <div class="container myFormDiv mt-3">
+    <div class="container myFormDiv mt-5">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="myForm" id="form1" enctype="multipart/form-data" onsubmit="return validaCreazione()">
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="creaNomeEvento">Nome Evento</label>
-                    <input type="text" class="form-control" id="creaNomeEvento" name="creaNomeEvento" placeholder="Nome Evento" required>
+                    <input type="text" class="form-control" id="creaNomeEvento" name="creaNomeEvento" placeholder="Nome Evento" maxlength="25" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="creaCategoria">Categoria</label>
@@ -162,7 +169,7 @@
                         <input type="file" class="custom-file-input" id="creaImmagine" name="creaImmagine" accept="image/*">
                         <label class="custom-file-label" for="creaImmagine">Scegli immagine...</label>
                         <div class="invalid-feedback">File non valido</div>
-                        
+
                     </div>
                 </div>
                 <div class="form-group col-4">
@@ -183,11 +190,11 @@
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="creaEmail">Email</label>
+                    <label for="creaEmail">Email<span class="red-text"> *</span></label>
                     <input type="email" class="form-control" id="creaEmail" name="creaEmail" placeholder="Email">
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="creaTel">Recapito telefonico</label>
+                    <label for="creaTel">Recapito telefonico<span class="red-text"> *</span></label>
                     <input type="tel" class="form-control" id="creaTel" name="creaTel" placeholder="Telefono">
                 </div>
             </div>
@@ -196,6 +203,8 @@
                 <label for="creaDesc">Descrizione:</label><br>
                 <textarea class="form-control" id="creaDesc" name="creaDesc" rows="4" cols="50"></textarea>
             </div>
+
+            <p class="red-text">* è sufficiente riempire uno tra i campi Email e Recapito telefonico</p>
         </form>
     </div>
     <datalist id="provincia" name="provincia">

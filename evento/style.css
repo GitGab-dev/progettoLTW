@@ -1,6 +1,7 @@
 body {
-    font-family: 'Pangolin', cursive;
-    background-color: rgba(113, 139, 211, 0.438);
+    font-family: 'Raleway', sans-serif;
+    background-color: #00285D;
+    color:white;
 }
 
 
@@ -12,7 +13,7 @@ body {
   }
 
 .navbar-bg {
-    background: linear-gradient(to right, rgba(113, 155, 211, 0.425), rgba(113, 155, 211, 0.945) );
+    background: whitesmoke;
 }
 
 th,td,h3 {
@@ -26,4 +27,30 @@ th {
 
 td {
     width: 60%;
+}
+
+
+button, #myModal {
+    font-family: 'Karla', sans-serif;
+}
+
+.btn-blue {
+    background-color: #154b92;
+    border-color: #0F4284;
+    color: white;
+}
+
+.btn-blue:hover{
+    background-color: #0c2e5c;
+    color: white;
+}
+
+
+#divEvento, .table[id="infoTable"] {
+    color: white;
+}
+
+.infoRow:hover {
+    background-color: rgba(255, 255, 255, 0.603);
+    color: rgb(19, 67, 170);
 }

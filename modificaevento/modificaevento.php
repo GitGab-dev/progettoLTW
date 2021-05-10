@@ -11,9 +11,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="./style.css">
+  <script src="https://kit.fontawesome.com/fa878af576.js" crossorigin="anonymous"></script>
+
   <script lang="javascript" src="script.js"></script>
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Karla&family=Raleway:wght@400;500&display=swap" rel="stylesheet">
 
 </head>
 
@@ -113,26 +117,28 @@
   }
   ?>
 
+  <div id="divErroreCrea"></div>
   <nav class="navbar navbar-light navbar-bg">
     <a class="navbar-brand main-title" href="./../homepage/welcome.php">
-      <img id="logo" src="../images/Ptogether.png" width="10%" height="10%" alt="Ptogether">
+      <img id="logo" src="../images/Ptogether.png" width="85px" height="85px" alt="Ptogether">
       <span class="ml-3">Modifica Evento</span>
     </a>
 
 
     <div class="mr-3 nav-item btn-group">
-      <button type="submit" form="form1" class="btn-lg btn-success mr-1">Salva</button>
+      <button type="submit" form="form1" class="btn-lg btn-success mr-1"><i class="far fa-calendar-check"></i> Salva</button>
       <!--<a href="../homepage/welcome.php"><button class="btn-lg btn-warning">Annulla</button></a>-->
-      <a <?php echo "href='../homepage/welcome.php?delete=true&id=$idEvento'"; ?>><button class="btn-lg btn-danger" id="elimina">Elimina</button></a>
+      <a <?php echo "href='../homepage/welcome.php?delete=true&id=$idEvento'"; ?>><button class="btn-lg btn-danger" id="elimina"><i class="fa fa-trash"></i> Elimina</button></a>
+      
     </div>
   </nav>
 
-  <div class="container myFormDiv mt-3">
+  <div class="container myFormDiv mt-5">
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . '?id=' . $idEvento; ?>" method="POST" class="myForm" id="form1" enctype="multipart/form-data" onsubmit="return validaCreazione()">
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="creaNomeEvento">Nome Evento</label>
-          <input type="text" class="form-control" id="creaNomeEvento" name="creaNomeEvento" placeholder="Nome Evento" required>
+          <input type="text" class="form-control" id="creaNomeEvento" name="creaNomeEvento" placeholder="Nome Evento" maxlength="25" required>
         </div>
         <div class="form-group col-md-6">
           <label for="creaCategoria">Categoria</label>
