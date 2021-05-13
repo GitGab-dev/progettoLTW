@@ -19,8 +19,10 @@
 
   $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
   $idEvento =  $_GET['id'];
-
+  console_log($idEvento);
+  
   $q = "SELECT events.id,categoria,citta,ora,username,partecipanti,nome,data,filep,email,telefono,descrizione FROM events,users WHERE users.id = events.utente AND events.id=$1";
+
   $res = pg_query_params($dbconn, $q, array($idEvento));
   $line = pg_fetch_array($res, null, PGSQL_ASSOC);
   if ($line['categoria'] == "1") $categoria = "Musica";

@@ -261,7 +261,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="passSigninBis">Password</label>
+                            
                             <div class="input-group" id="show_hide_password">
                                 <input type="password" class="form-control" id="passSigninBis" name="passSigninBis" placeholder="Ripeti la password" required>
                                 <div class="input-group-append">

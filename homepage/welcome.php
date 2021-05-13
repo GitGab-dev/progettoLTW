@@ -146,7 +146,7 @@
     <script>
         $(document).ready(function() {
             $(".infoButton").click(function(e) {
-                $("#divEvento").load("../evento/eventomin.php?id=" + e.target.id);
+                if(e.target.id!="") $("#divEvento").load("../evento/eventomin.php?id=" + e.target.id);
             })
         })
     </script>
