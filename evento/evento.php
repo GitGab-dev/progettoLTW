@@ -48,7 +48,7 @@
   ?>
 
   <nav class="navbar navbar-light navbar-bg">
-    <a class="navbar-brand main-title" href="#">
+    <a class="navbar-brand main-title" href="javascript:history.go(-1)">
       <img id="logo" src="../images/Ptogether.png" width="85px" height="85px"  alt="Ptogether">
       <span class="ml-3"><?php echo "$line[nome]"; ?></span>
     </a>
@@ -92,6 +92,10 @@
             <tr class="infoRow">
               <th>Organizzatore</th>
               <td><?php echo "$line[username]"; ?></td>
+            </tr>
+            <tr class="infoRow">
+              <th>Partecipanti</th>
+              <td><?php echo "~$line[partecipanti]"; ?></td>
             </tr>
             <tr class="infoRow">
               <th>Email</th>

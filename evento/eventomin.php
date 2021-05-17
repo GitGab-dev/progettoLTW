@@ -81,6 +81,10 @@
               <td><?php echo "$line[username]"; ?></td>
             </tr>
             <tr class="infoRow">
+              <th>Partecipanti</th>
+              <td><?php echo "~$line[partecipanti]"; ?></td>
+            </tr>
+            <tr class="infoRow">
               <th>Email</th>
               <td><?php echo "$line[email]"; ?></td>
             </tr>
