@@ -15,7 +15,7 @@ background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(0,41,93,1) 56%, rgba(3
   background-color:whitesmoke;
 }
 
-button, .myCell, .modal {
+button, .myCell, .modal, footer {
   font-family: 'Karla', sans-serif;
 }
 
@@ -65,5 +65,6 @@ button, .myCell, .modal {
 
 
 a, a:hover{
-  color:#333
+  color:#333;
+  text-decoration: none;
 }

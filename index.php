@@ -189,8 +189,21 @@
             </a>
         </div>
         <footer class="text-center text-white">
+
             <div class="text-center text-dark p-3" style="background-color: rgba(255, 255, 255, 0.8);">
-                © 2021 Copyright by Filippo & Gabriele: Progetti LTW 2020/2021
+                <ul class="list-unstyled list-inline text-center">
+                    <li class="list-inline-item">
+                        <a class="btn-floating btn-fb mx-1" href="https://github.com/ZoSo9999" role="button">
+                            <i class="fab fa-github"> </i> Filippo
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="btn-floating btn-tw mx-1" href="https://github.com/GitGab-dev" role="button">
+                            <i class="fab fa-github"> </i> Gabriele
+                        </a>
+                    </li>
+                </ul>
+                <a href="http://www.diag.uniroma1.it/rosati/ltw/"> © 2021 Progetti LTW 2020/2021</a>
             </div>
         </footer>
     </div>
@@ -261,7 +274,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            
+
                             <div class="input-group" id="show_hide_password">
                                 <input type="password" class="form-control" id="passSigninBis" name="passSigninBis" placeholder="Ripeti la password" required>
                                 <div class="input-group-append">
