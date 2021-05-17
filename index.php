@@ -132,8 +132,8 @@
                 }, "fast");
             });
             $(document).ready(function() {
-                $("#titolo").hide().fadeIn(2500).animate({
-                    "font-size": "150%"
+                $("#titolo").hide().fadeIn(2000).animate({
+                    "font-size": "110%"
                 });
                 $("#titolo").animate({
                     "font-size": "100%"

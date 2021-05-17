@@ -105,7 +105,7 @@ if (isset($_POST['fakeButton'])) {
                 ?>
                     <tr>
                         <td>
-                            <div class="media border p-3">
+                            <div class="media p-3">
                                 <?php echo "<img src=../uploads/" . $line["filep"] . " alt='imgEvento' class='mr-3 mt-3 rounded-circle' width='210px' height='190px'>"; ?>
                                 <div class="media-body">
                                     <h4><?php echo "<strong>$line[nome]</strong>"; ?> <small><i><?php echo "$line[data]"; ?></i></small></h4>
@@ -118,8 +118,10 @@ if (isset($_POST['fakeButton'])) {
                             </div>
                         </td>
                         <td>
-                            <div class="media border p-3 pl-5">
-                                <?php echo "<a href='../evento/evento.php?categoria=$categoria&luogo=$luogo&dataDal=$dataDal&dataAl=$dataAl&id=$line[id]'><button type='button' class='m-3 btn btn-blue'><i class='fas fa-clipboard-list'></i> Info</button></a>"; ?>
+                            <div class="media p-3">
+                                <div class="mr-3 p-3 pl-5 btn-group">
+                                    <?php echo "<a href='../evento/evento.php?categoria=$categoria&luogo=$luogo&dataDal=$dataDal&dataAl=$dataAl&id=$line[id]'><button type='button' class='m-3 btn btn-blue'><i class='fas fa-clipboard-list'></i> Info</button></a>"; ?>
+                                </div>
                             </div>
                         </td>
 

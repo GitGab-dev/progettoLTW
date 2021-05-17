@@ -95,9 +95,9 @@
 
 
 
-    <div class="row container-fluid mt-2 ">
-        <div class="table-wrapper-scroll-y my-custom-scrollbar col-5 myFull ">
-            <table class="table table-striped cell">
+    <div class="row container-fluid my-2">
+        <div class="table-wrapper-scroll-y my-custom-scrollbar myFull ">
+            <table class="table-striped table-responsive">
                 <thead></thead>
                 <tbody>
                     <?php
@@ -107,7 +107,7 @@
                     ?>
                         <tr>
                             <td>
-                                <div class="media border p-3">
+                                <div class="media p-3">
                                     <?php echo "<img src=../uploads/" . $line["filep"] . " alt='imgEvento' class='mr-3 mt-3 rounded-circle' width='170px' height='150px'>"; ?>
                                     <div class="media-body">
                                         <h5><?php echo "<strong>$line[nome]</strong>"; ?> <small><i><?php echo "$line[data]"; ?></i></small></h5>
@@ -119,12 +119,10 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="media border p-3">
-                                    <div class="mr-3 p-3 pl-5 btn-group myButton">
-
+                                <div class="media p-3">
+                                    <div class="mr-3 p-3 pl-5 btn-group">
                                         <?php echo "<button type='button' class='btn btn-blue infoButton' id='$line[id]'><i class='fas fa-clipboard-list'></i> Info</button>"; ?>
                                         <?php echo "<a href='../modificaevento/modificaevento.php?id=$line[id]'><button type='button' class='btn btn-secondary'><i class='fas fa-pencil-alt'></i> Modifica</button></a>"; ?>
-
                                     </div>
                                 </div>
                             </td>
@@ -138,7 +136,7 @@
             </table>
         </div>
 
-        <div class="col-7" id="divEvento">
+        <div class="w-60" id="divEvento">
         </div>
 
     </div>

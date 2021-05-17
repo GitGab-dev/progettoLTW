@@ -9,9 +9,8 @@ body {
 
 .navbar-bg {
     background-color:whitesmoke;
-    height: 11.5vh;
+    height: 11.5%;
 }
-
 .main-title {
     font-size: 300%;
     font-weight: 900;
@@ -23,7 +22,13 @@ body {
 }
 
 .myFull {
-    height: 88.5vh;
+    height: 87.5vh;
+    width: 40% !important;
+    background-color: rgba(255,255,255,0.6);
+}
+
+.w-60 {
+    width: 60% !important;
 }
 
 
@@ -40,9 +45,6 @@ button, #myModal {
     font-family: 'Karla', sans-serif;
 }
 
-.cell {
-    background-color: rgba(255,255,255,0.6);
-}
 
 #divEvento, .table[id="infoTable"] {
     color: white;
