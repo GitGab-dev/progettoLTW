@@ -12,8 +12,6 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="./style.css">
   <script lang="javascript" src="script.js"></script>
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -21,8 +19,10 @@
 
   $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
   $idEvento =  $_GET['id'];
-
+  console_log($idEvento);
+  
   $q = "SELECT events.id,categoria,citta,ora,username,partecipanti,nome,data,filep,email,telefono,descrizione FROM events,users WHERE users.id = events.utente AND events.id=$1";
+
   $res = pg_query_params($dbconn, $q, array($idEvento));
   $line = pg_fetch_array($res, null, PGSQL_ASSOC);
   if ($line['categoria'] == "1") $categoria = "Musica";
@@ -54,37 +54,41 @@
   <div class="container-fluid mr-5 my-5">
     <div class="media">
       <div class="media-body mr-3" style="font-size:120%">
-        <table class="table table-hover">
+        <table class="table" id="infoTable">
           <tbody>
-            <tr>
+            <tr class="infoRow">
               <th>Nome Evento</th>
               <td> <?php echo "$line[nome]"; ?></td>
             </tr>
-            <tr>
+            <tr class="infoRow">
               <th>Categoria</th>
               <td> <?php echo "$categoria"; ?></td>
             </tr>
-            <tr>
+            <tr class="infoRow">
               <th>Luogo</th>
               <td><?php echo "$line[citta]"; ?></td>
             </tr>
-            <tr>
+            <tr class="infoRow">
               <th>Data</th>
               <td><?php echo "$line[data]"; ?></td>
             </tr>
-            <tr>
+            <tr class="infoRow">
               <th>Orario</th>
               <td><?php echo "$line[ora]"; ?></td>
             </tr>
-            <tr>
+            <tr class="infoRow">
               <th>Organizzatore</th>
               <td><?php echo "$line[username]"; ?></td>
             </tr>
-            <tr>
+            <tr class="infoRow">
+              <th>Partecipanti</th>
+              <td><?php echo "~$line[partecipanti]"; ?></td>
+            </tr>
+            <tr class="infoRow">
               <th>Email</th>
               <td><?php echo "$line[email]"; ?></td>
             </tr>
-            <tr>
+            <tr class="infoRow">
               <th>Contatto telefonico</th>
               <td><?php echo "$line[telefono]"; ?></td>
             </tr>

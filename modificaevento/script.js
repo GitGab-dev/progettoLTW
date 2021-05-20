@@ -1,18 +1,24 @@
 function validaCreazione(){
     //console.log("VALIDA");
     if (document.getElementById("creaCategoria").value == "default") {
-        alert("Scegli la categoria");
+        let d = document.getElementById("divErroreCrea");
+        d.innerHTML='<div class="alert alert-danger fade show"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Attenzione!</strong> Devi scegliere una categoria!</div>';
+        d.style.display = "block";
         return false;
     }
     else if (document.getElementById("creaTel").value == "" && document.getElementById("creaEmail").value == "") {
-        alert("Inserisci un numero di telefono o una email");
+        let d = document.getElementById("divErroreCrea");
+        d.innerHTML='<div class="alert alert-danger fade show"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Attenzione!</strong> Devi scegliere un numero di telefono o una password!</div>';
+        d.style.display = "block";
         return false;
     }
     var data = document.getElementById("creaData").value.split("-").toString();
     data = new Date(data).getTime();
     var dataattuale = new Date().getTime();
     if (data < dataattuale) {
-        alert("Inserisci una data valida");
+        let d = document.getElementById("divErroreCrea");
+        d.innerHTML='<div class="alert alert-danger fade show"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Attenzione!</strong> Devi inserire una data valida!</div>';
+        d.style.display = "block";
         return false;
     }
 }
