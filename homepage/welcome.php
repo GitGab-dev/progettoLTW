@@ -6,11 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
+    <link rel="icon" href="../images/Ptogether.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/fa878af576.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="../main.css">
     <link rel="stylesheet" href="style.css">
     <script lang="javascript" src="script.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -21,6 +23,7 @@
 
 <body>
     <?php
+    //connessione al DB
     session_start();
     if (!$_SESSION['id']) {
         session_commit();
@@ -36,6 +39,8 @@
         $res = pg_query_params($dbconn, $q, array($_GET['id']));
     }
     ?>
+
+    <!--NAVBAR-->
     <nav class="navbar navbar-light navbar-bg">
         <a class="navbar-brand main-title" href="#">
             <img id="logo" src="../images/Ptogether.png" width="85px" height="85px" alt="Ptogether">
@@ -50,6 +55,7 @@
         </div>
     </nav>
 
+    <!--SEARCH MODAL-->
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -91,10 +97,7 @@
         </div>
     </div>
 
-
-
-
-
+    <!--LEFT TABLE-->
     <div class="row container-fluid my-2">
         <div class="table-wrapper-scroll-y my-custom-scrollbar myFull ">
             <table class="table-striped table-responsive">
@@ -136,6 +139,7 @@
             </table>
         </div>
 
+        <!--RIGHT DIV-->
         <div class="w-60" id="divEvento">
         </div>
 
@@ -144,20 +148,21 @@
     <script>
         $(document).ready(function() {
             $(".infoButton").click(function(e) {
-                if(e.target.id!="") $("#divEvento").load("../evento/eventomin.php?id=" + e.target.id);
+                if (e.target.id != "") $("#divEvento").load("../evento/eventomin.php?id=" + e.target.id);
             })
         })
     </script>
 
+    <!--LISTA DEI COMUNI-->
     <?php
 
-    $filename = "../resources/comuniRidotto.csv"; //example name for your CSV file with classes - this file would exist in the same directory as this PHP file
-    $classArray = array(); //declare an array to store your classes
+    $filename = "../resources/comuniRidotto.csv";
+    $classArray = array();
 
     if (($handle = fopen($filename, "r")) !== FALSE) {
 
         while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-            foreach ($data as $v) { //loop through the CSV data and add to your array
+            foreach ($data as $v) {
                 array_push($classArray, $v);
             }
         }
@@ -167,7 +172,7 @@
     <datalist id="provincia" name="provincia">
         <?php
 
-        for ($i = 0; $i < count($classArray); $i++) { // this is embedded PHP that allows you to loop through your array and echo the values of the PHP array within an HTML option tag
+        for ($i = 0; $i < count($classArray); $i++) {
             echo "<option value='$classArray[$i]'>$classArray[$i]</option>";
         }
 

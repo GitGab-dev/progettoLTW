@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Crea Evento</title>
+  <title>Modifica Evento</title>
+  <link rel="icon" href="../images/Ptogether.png">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="./style.css">
+
+  <link rel="stylesheet" href="../main.css">
   <script src="https://kit.fontawesome.com/fa878af576.js" crossorigin="anonymous"></script>
 
   <script lang="javascript" src="script.js"></script>
@@ -23,6 +24,7 @@
 
 <body>
   <?php
+  //connessione al DB
   session_start();
   if (!$_SESSION['id']) {
     session_commit();
@@ -40,6 +42,7 @@
   $res = pg_query_params($dbconn, $q, array($idEvento));
   $line = pg_fetch_array($res, null, PGSQL_ASSOC);
 
+  //modifica dell'evento
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     console_log($_POST);
@@ -48,7 +51,6 @@
     $luogo = test_input($_POST["creaLuogo"]);
     $data = test_input($_POST["creaData"]);
     $ora = test_input($_POST["creaOra"]);
-    //TO_DO: idEvento per nome immagine e immagine di default
     $check = $_FILES["creaImmagine"]["tmp_name"];
 
 
@@ -73,9 +75,6 @@
 
       $res = pg_query_params($dbconn, $q1, array($nome, $categoria, $luogo, $data, $ora, $email, $telefono, $descrizione, $idEvento));
       console_log($q1);
-
-
-      //CONTROLLO IMMAGINE
 
       if ($check) {
         $immagine = test_input($idEvento . "." . strtolower(pathinfo($_FILES["creaImmagine"]["name"], PATHINFO_EXTENSION)));
@@ -118,6 +117,8 @@
   ?>
 
   <div id="divErroreCrea"></div>
+
+  <!--NAVBAR-->
   <nav class="navbar navbar-light navbar-bg">
     <a class="navbar-brand main-title" href="./../homepage/welcome.php">
       <img id="logo" src="../images/Ptogether.png" width="85px" height="85px" alt="Ptogether">
@@ -127,13 +128,13 @@
 
     <div class="mr-3 nav-item btn-group">
       <button type="submit" form="form1" class="btn-lg btn-success mr-1"><i class="far fa-calendar-check"></i> Salva</button>
-      <!--<a href="../homepage/welcome.php"><button class="btn-lg btn-warning">Annulla</button></a>-->
       <a <?php echo "href='../homepage/welcome.php?delete=true&id=$idEvento'"; ?>><button class="btn-lg btn-danger" id="elimina"><i class="fa fa-trash"></i> Elimina</button></a>
-      
+
     </div>
   </nav>
 
-  <div class="container myFormDiv mt-5">
+  <!--FORM-->
+  <div class="container myFormDiv mt-5" style="font-weight: bold;">
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . '?id=' . $idEvento; ?>" method="POST" class="myForm" id="form1" enctype="multipart/form-data" onsubmit="return validaCreazione()">
       <div class="form-row">
         <div class="form-group col-md-6">
@@ -218,30 +219,30 @@
 
   </div>
 
+  <!--LISTA DEI COMUNI-->
   <?php
+  $filename = "../resources/comuniRidotto.csv";
+  $classArray = array();
 
-    $filename = "../resources/comuniRidotto.csv"; //example name for your CSV file with classes - this file would exist in the same directory as this PHP file
-    $classArray = array(); //declare an array to store your classes
+  if (($handle = fopen($filename, "r")) !== FALSE) {
 
-    if (($handle = fopen($filename, "r")) !== FALSE) {
-
-        while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-            foreach ($data as $v) { //loop through the CSV data and add to your array
-                array_push($classArray, $v);
-            }
-        }
+    while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+      foreach ($data as $v) {
+        array_push($classArray, $v);
+      }
     }
+  }
+  ?>
+
+  <datalist id="provincia" name="provincia">
+    <?php
+
+    for ($i = 0; $i < count($classArray); $i++) {
+      echo "<option value='$classArray[$i]'>$classArray[$i]</option>";
+    }
+
     ?>
-
-    <datalist id="provincia" name="provincia">
-        <?php
-
-        for ($i = 0; $i < count($classArray); $i++) { // this is embedded PHP that allows you to loop through your array and echo the values of the PHP array within an HTML option tag
-            echo "<option value='$classArray[$i]'>$classArray[$i]</option>";
-        }
-
-        ?>
-    </datalist>
+  </datalist>
 </body>
 
 

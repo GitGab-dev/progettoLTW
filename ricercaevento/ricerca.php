@@ -6,10 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Risultati</title>
+    <link rel="icon" href="../images/Ptogether.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../main.css">
     <link rel="stylesheet" href="./style.css">
     <script lang="javascript" src="script.js"></script>
     <script src="https://kit.fontawesome.com/fa878af576.js" crossorigin="anonymous"></script>
@@ -20,7 +21,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Karla&family=Raleway:wght@400;500&display=swap" rel="stylesheet">
 
 </head>
+
 <?php
+//connessione al DB e gestione di partecipa
 $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
 if (isset($_POST['fakeButton'])) {
     $q1 = "UPDATE public.events SET partecipanti=$1 WHERE id=$2";
@@ -33,6 +36,7 @@ if (isset($_POST['fakeButton'])) {
 ?>
 
 <body>
+    <!--NAVBAR-->
     <nav class="navbar navbar-light navbar-bg">
         <a class="navbar-brand main-title" href="./../homepage/welcome.php">
             <img id="logo" src="../images/Ptogether.png" width="85px" height="85px" alt="Ptogether">
@@ -46,6 +50,7 @@ if (isset($_POST['fakeButton'])) {
         </div>
     </nav>
 
+    <!--SEARCH MODAL-->
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -87,6 +92,7 @@ if (isset($_POST['fakeButton'])) {
         </div>
     </div>
 
+    <!--RESULTS TABLE-->
     <div class="container mt-5">
         <table class="table table-striped cell">
             <thead></thead>
@@ -145,15 +151,17 @@ if (isset($_POST['fakeButton'])) {
             </tbody>
         </table>
     </div>
+
+    <!--LISTA DEI COMUNI-->
     <?php
 
-    $filename = "../resources/comuniRidotto.csv"; //example name for your CSV file with classes - this file would exist in the same directory as this PHP file
-    $classArray = array(); //declare an array to store your classes
+    $filename = "../resources/comuniRidotto.csv";
+    $classArray = array();
 
     if (($handle = fopen($filename, "r")) !== FALSE) {
 
         while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-            foreach ($data as $v) { //loop through the CSV data and add to your array
+            foreach ($data as $v) {
                 array_push($classArray, $v);
             }
         }
@@ -163,7 +171,7 @@ if (isset($_POST['fakeButton'])) {
     <datalist id="provincia" name="provincia">
         <?php
 
-        for ($i = 0; $i < count($classArray); $i++) { // this is embedded PHP that allows you to loop through your array and echo the values of the PHP array within an HTML option tag
+        for ($i = 0; $i < count($classArray); $i++) {
             echo "<option value='$classArray[$i]'>$classArray[$i]</option>";
         }
 

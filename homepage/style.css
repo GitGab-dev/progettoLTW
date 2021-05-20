@@ -1,21 +1,13 @@
 body {
-    /*font-family: 'Pangolin', cursive;*/
-    font-family: 'Raleway', sans-serif;
     background: rgb(2,0,36);
     background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(0,41,93,1) 56%, rgba(31,94,175,1) 100%);
+    color:initial;
     max-height: 100%;
 }
 
-
 .navbar-bg {
-    background-color:whitesmoke;
     height: 11.5%;
 }
-.main-title {
-    font-size: 300%;
-    font-weight: 900;
-    text-shadow: -2px 0 rgba(34, 99, 196, 0.8), 0 2px rgba(34, 99, 196, 0.8) 2px 0 rgba(34, 99, 196, 0.8), 0 -2px rgba(34, 99, 196, 0.8);
-  }
 
 #bentornato {
     font-size: 80%;
@@ -31,7 +23,6 @@ body {
     width: 60% !important;
 }
 
-
 .my-custom-scrollbar {
     position: relative;
     overflow: auto;
@@ -41,11 +32,6 @@ body {
     display: block;
 }
 
-button, #myModal {
-    font-family: 'Karla', sans-serif;
-}
-
-
 #divEvento, .table[id="infoTable"] {
     color: white;
 }
@@ -53,15 +39,4 @@ button, #myModal {
 .infoRow:hover {
     background-color: rgba(255, 255, 255, 0.589);
     color: rgb(19, 67, 170);
-}
-
-.btn-blue {
-    background-color: #154b92;
-    border-color: #0F4284;
-    color: white;
-}
-
-.btn-blue:hover{
-    background-color: #0c2e5c;
-    color: white;
 }

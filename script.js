@@ -32,7 +32,7 @@ function controllaSearch() {
 
     if (cat == "default") {
         let d = document.getElementById("divErroreSearch");
-        d.innerHTML='<div class="alert alert-danger fade show"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Attenzione!</strong> Devi scegliere una categoria!</div>';
+        d.innerHTML = '<div class="alert alert-danger fade show"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Attenzione!</strong> Devi scegliere una categoria!</div>';
         d.style.display = "block";
         return false;
     }
@@ -40,7 +40,7 @@ function controllaSearch() {
 
     if (dataEnd - dataInit < 0) {
         let d = document.getElementById("divErroreSearch");
-        d.innerHTML='<div class="alert alert-danger fade show"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Attenzione!</strong> Le date non sono accettabili!</div>';
+        d.innerHTML = '<div class="alert alert-danger fade show"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Attenzione!</strong> Le date non sono accettabili!</div>';
         d.style.display = "block";
         return false;
     }
@@ -51,9 +51,9 @@ function controllaSearch() {
 function controllaSignin() {
     let passwords = document.getElementsByClassName("passSignin");
     if (passwords[0].value == passwords[1].value) return true;
-    
+
     let d = document.getElementById("divErroreSignin");
-    d.innerHTML='<div class="alert alert-danger fade show"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Attenzione!</strong> Le password non coincidono!</div>';
+    d.innerHTML = '<div class="alert alert-danger fade show"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Attenzione!</strong> Le password non coincidono!</div>';
     d.style.display = "block";
     return false;
 }
@@ -69,10 +69,10 @@ function erroreLogin() {
         user.classList.add("border-danger");
         pass.classList.add("border-danger");
 
-        user.addEventListener("click", function(e){
+        user.addEventListener("click", function (e) {
             e.target.classList.remove("border-danger");
         });
-        pass.addEventListener("click", function(e){
+        pass.addEventListener("click", function (e) {
             e.target.classList.remove("border-danger");
         });
     });
@@ -87,7 +87,7 @@ function erroreRegistrazione() {
 
         user.classList.add("border-warning");
 
-        user.addEventListener("click", function(e){
+        user.addEventListener("click", function (e) {
             e.target.classList.remove("border-warning");
         });
     });

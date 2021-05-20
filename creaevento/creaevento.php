@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crea Evento</title>
+    <link rel="icon" href="../images/Ptogether.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="../main.css">
     <link rel="stylesheet" href="style.css">
     <script lang="javascript" src="script.js"></script>
     <script src="https://kit.fontawesome.com/fa878af576.js" crossorigin="anonymous"></script>
@@ -33,6 +35,7 @@
         session_commit();
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        //connessione al db
         $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
 
         $nome = test_input($_POST["creaNomeEvento"]);
@@ -41,8 +44,7 @@
         $data = test_input($_POST["creaData"]);
         $ora = test_input($_POST["creaOra"]);
 
-        //TO_DO: idEvento per nome immagine e immagine di default
-        //$immagine = test_input($idUtente . "-" . str_replace(" ","",$nome) . "." . strtolower(pathinfo($_FILES["creaImmagine"]["name"], PATHINFO_EXTENSION)));
+        
         $idEvento = getNextId($dbconn);
 
         $check = $_FILES["creaImmagine"]["tmp_name"];
@@ -62,7 +64,6 @@
           </div>';
         } else {
 
-            echo "che succede?";
             $q1 = "INSERT INTO public.events(
                 id, nome, categoria, citta, data, ora, filep, email, telefono, descrizione, partecipanti, utente)
                 VALUES (DEFAULT,$1, $2, $3, $4, $5, $6, $7, $8, $9, 0, $10);";
@@ -86,6 +87,8 @@
         pg_free_result($res); //libera la memoria
         pg_close($dbconn); //disconnette
     }
+
+    //funzioni di supporto
     function test_input($data)
     {
         $data = trim($data);
@@ -111,8 +114,10 @@
     }
     ?>
 
+    <!--DIV PER POPUP D'ERRORE-->
     <div id="divErroreCrea"></div>
 
+    <!--NAVBAR-->
     <nav class="navbar navbar-light navbar-bg">
         <a class="navbar-brand main-title" href="./../homepage/welcome.php">
             <img id="logo" src="../images/Ptogether.png" width="85px" height="85px" alt="Ptogether">
@@ -126,6 +131,7 @@
     </nav>
 
 
+    <!--FORM-->
     <div class="container myFormDiv mt-5">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="myForm" id="form1" enctype="multipart/form-data" onsubmit="return validaCreazione()">
             <div class="form-row">
@@ -208,15 +214,15 @@
         </form>
     </div>
 
+    <!--LISTA DEI COMUNI-->
     <?php
-
-    $filename = "../resources/comuniRidotto.csv"; //example name for your CSV file with classes - this file would exist in the same directory as this PHP file
-    $classArray = array(); //declare an array to store your classes
+    $filename = "../resources/comuniRidotto.csv";
+    $classArray = array();
 
     if (($handle = fopen($filename, "r")) !== FALSE) {
 
         while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-            foreach ($data as $v) { //loop through the CSV data and add to your array
+            foreach ($data as $v) {
                 array_push($classArray, $v);
             }
         }
@@ -226,7 +232,7 @@
     <datalist id="provincia" name="provincia">
         <?php
 
-        for ($i = 0; $i < count($classArray); $i++) { // this is embedded PHP that allows you to loop through your array and echo the values of the PHP array within an HTML option tag
+        for ($i = 0; $i < count($classArray); $i++) {
             echo "<option value='$classArray[$i]'>$classArray[$i]</option>";
         }
 

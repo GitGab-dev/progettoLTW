@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planning Together</title>
+    <link rel="icon" href="images/Ptogether.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+    <link rel="stylesheet" href="./main.css">
     <link rel="stylesheet" href="./style.css">
     <script src="https://kit.fontawesome.com/fa878af576.js" crossorigin="anonymous"></script>
     <script lang="javascript" src="script.js"></script>
-    <!--FONT USATO-->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Girassol&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -26,12 +25,14 @@
 <body>
 
     <?php
+    // connessione al DB
     $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
     $password = $username = "";
     session_start();
     if (isset($_SESSION['id']) && $_SESSION['id']) session_unset();
     session_commit();
 
+    // gestione LOGIN
     if (isset($_POST["loginButton"])) {
         $username = $_POST["usernameLogin"];
         $q1 = "SELECT * FROM users WHERE username = $1";
@@ -63,6 +64,7 @@
         }
         pg_free_result($res); //libera la memoria
 
+    // gestione SIGNIN
     } else if (isset($_POST["signinButton"])) {
         $username = $_POST["userSignin"];
         $q1 = "SELECT * FROM users WHERE username = $1";
@@ -93,6 +95,7 @@
     pg_close($dbconn); //disconnette
 
 
+    //correzione degli input
     function test_input($data)
     {
         $data = trim($data);
@@ -104,7 +107,7 @@
 
 
 
-
+    <!--NAVBAR-->
     <nav class="navbar navbar-light navbar-bg">
         <a class="navbar-brand main-title" href="#">
             <img id="logo" src="./images/Ptogether.png" width="85px" height="85px" alt="Ptogether">
@@ -143,7 +146,9 @@
 
     </nav>
 
+
     <div id="mainPart">
+        <!--CAROUSEL-->
         <div id="demo" class="carousel slide" data-ride="carousel">
 
             <ul class="carousel-indicators">
@@ -188,6 +193,8 @@
                 <span class="carousel-control-next-icon"></span>
             </a>
         </div>
+
+        <!--FOOTER-->
         <footer class="text-center text-white">
 
             <div class="text-center text-dark p-3" style="background-color: rgba(255, 255, 255, 0.8);">
@@ -210,7 +217,7 @@
 
 
 
-
+    <!--LOGIN MODAL-->
     <div class="modal fade" id="myModalLogin" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -249,6 +256,7 @@
         </div>
     </div>
 
+    <!--SIGNIN MODAL-->
     <div class="modal fade" id="myModalSignin" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -292,6 +300,7 @@
         </div>
     </div>
 
+    <!--SEARCH MODAL-->
     <div class="modal fade" id="myModalSearch" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -337,9 +346,7 @@
         $(".modal").on("shown.bs.modal", function() {
             $(".user").trigger("focus");
         })
-    </script>
-
-    <script>
+    
         $(document).ready(function() {
             $("#show_hide_password a").on('click', function(event) {
                 event.preventDefault();
@@ -356,15 +363,17 @@
         });
     </script>
 
+
+    <!--LISTA DEI COMUNI-->
     <?php
 
-    $filename = "./resources/comuniRidotto.csv"; //example name for your CSV file with classes - this file would exist in the same directory as this PHP file
-    $classArray = array(); //declare an array to store your classes
+    $filename = "./resources/comuniRidotto.csv";
+    $classArray = array();
 
     if (($handle = fopen($filename, "r")) !== FALSE) {
 
         while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-            foreach ($data as $v) { //loop through the CSV data and add to your array
+            foreach ($data as $v) {
                 array_push($classArray, $v);
             }
         }
@@ -374,7 +383,7 @@
     <datalist id="provincia" name="provincia">
         <?php
 
-        for ($i = 0; $i < count($classArray); $i++) { // this is embedded PHP that allows you to loop through your array and echo the values of the PHP array within an HTML option tag
+        for ($i = 0; $i < count($classArray); $i++) {
             echo "<option value='$classArray[$i]'>$classArray[$i]</option>";
         }
 

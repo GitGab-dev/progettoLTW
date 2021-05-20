@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
   <meta charset="UTF-8">
@@ -8,19 +8,20 @@
   <title>Evento</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  <link rel="stylesheet" href="../main.css">
   <link rel="stylesheet" href="./style.css">
   <script lang="javascript" src="script.js"></script>
 </head>
 
 <body>
   <?php
-
+  //connessione al DB
   $dbconn = pg_connect("host=localhost port=5432 dbname=progetto user=postgres password=biar") or die('Could not connect' . pg_last_error());
   $idEvento =  $_GET['id'];
   console_log($idEvento);
-  
+
   $q = "SELECT events.id,categoria,citta,ora,username,partecipanti,nome,data,filep,email,telefono,descrizione FROM events,users WHERE users.id = events.utente AND events.id=$1";
 
   $res = pg_query_params($dbconn, $q, array($idEvento));
@@ -29,15 +30,6 @@
   else if ($line['categoria'] == "2") $categoria = "Sport";
   else if ($line['categoria'] == "3") $categoria = "Escursionismo";
   else $categoria = "Varie";
-
-  if (isset($_GET['partecipa'])) {
-    $q1 = "UPDATE public.events SET partecipanti=$1 WHERE id=$2";
-    $res = pg_query_params($dbconn, $q1, array($line['partecipanti'] + 1, $idEvento));
-    echo '<div class="alert alert-success alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Partecipazione accettata!</strong> Hai deciso di partecipare!
-            </div>';
-  }
 
   pg_free_result($res); //libera la memoria
   pg_close($dbconn); //disconnette
@@ -51,6 +43,7 @@
   }
   ?>
 
+  <!--SCHEDA EVENTO-->
   <div class="container-fluid mr-5 my-5">
     <div class="media">
       <div class="media-body mr-3" style="font-size:120%">
@@ -104,4 +97,5 @@
     </div>
   </div>
 </body>
+
 </html>
