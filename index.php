@@ -113,7 +113,7 @@
 
 
         <div class="mr-3 nav-item btn-group">
-            <button type="button" class="btn-lg btn-blue mr-1" data-toggle="modal" data-target="#myModalLogin" onclick="return ricorda()">Login</button>
+            <button type="button" class="btn-lg btn-blue mr-1" data-toggle="modal" data-target="#myModalLogin" onclick="return compila()">Login</button>
             <button type="button" class="btn-lg btn-blue mr-1" data-toggle="modal" data-target="#myModalSignin">Registrati</button>
             <button type="button" class="btn-lg btn-blue mr-1" data-toggle="modal" data-target="#myModalSearch"><i class="fa fa-search"></i> Cerca il tuo evento</button>
         </div>
@@ -221,7 +221,7 @@
 
                 <div class="modal-body">
 
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="myForm" id="logForm" onsubmit="return controllaLogin()">
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="myForm" id="logForm" onsubmit="return ricordami()">
                         <div class="form-group">
                             <label for="usernameLogin">Nome Utente</label>
                             <input type="text" class="form-control user" id="usernameLogin" name="usernameLogin" value="<?php echo $username; ?>" placeholder="Nome Utente" required>
@@ -267,7 +267,7 @@
                         <div class="form-group">
                             <label for="passSignin">Password</label>
                             <div class="input-group" id="show_hide_password">
-                                <input type="password" class="form-control" id="passSignin" name="passSignin" placeholder="Scegli una password" required>
+                                <input type="password" class="form-control passSignin" id="passSignin" name="passSignin" placeholder="Scegli una password" required>
                                 <div class="input-group-append">
                                     <span class="input-group-text"><a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a></span>
                                 </div>
@@ -276,7 +276,7 @@
                         <div class="form-group">
 
                             <div class="input-group" id="show_hide_password">
-                                <input type="password" class="form-control" id="passSigninBis" name="passSigninBis" placeholder="Ripeti la password" required>
+                                <input type="password" class="form-control passSignin" id="passSigninBis" name="passSigninBis" placeholder="Ripeti la password" required>
                                 <div class="input-group-append">
                                     <span class="input-group-text"><a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a></span>
                                 </div>
