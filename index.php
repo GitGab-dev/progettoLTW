@@ -210,7 +210,7 @@
                         </a>
                     </li>
                 </ul>
-                <a href="http://www.diag.uniroma1.it/rosati/ltw/"> © 2021 Progetti LTW 2020/2021</a>
+                <a href="http://www.diag.uniroma1.it/rosati/ltw/"> © Progetti LTW 2020/2021</a>
             </div>
         </footer>
     </div>
